@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">RecipesKotlin</string>
+
+    <string name="italian_tag">Italian</string>
+    <string name="indian_tag">Indian</string>
+    <string name="pakistani_tag">Pakistani</string>
+    <string name="japanese_tag">Japanese</string>
+    <string name="korean_tag">Korean</string>
+    <string name="mexican_tag">Mexican</string>
+    <string name="russian_tag">Russian</string>
+    <string name="spanish_tag">Spanish</string>
+    <string name="vietnamese_tag">Vietnamese</string>
+</resources>
