@@ -35,7 +35,6 @@ class RecipeTagAdapter(
 class HoroscopeViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
     private val txtName = view.findViewById<TextView>(R.id.name)
-    //private val dateHoroscope = view.findViewById<TextView>(R.id.dateHoroscope)
     //private val imgHoroscope = view.findViewById<ImageView>(R.id.imgHoroscope)
     //private val favoriteImageView = view.findViewById<ImageView>(R.id.imgFavorite)
 
@@ -46,7 +45,7 @@ class HoroscopeViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         itemView.setOnClickListener {
             onClickListener(recipeTag)
         }
-           /* dateHoroscope.text = context.getString(horoscope.date)
+           /*
             imgHoroscope.setImageResource(horoscope.image)
             }*/
 

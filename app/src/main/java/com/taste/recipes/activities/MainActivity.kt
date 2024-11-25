@@ -50,7 +50,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun onItemSelect(recipeTag: RecipeTag) {
         val intent = Intent(this, ListRecipe::class.java)
-        intent.putExtra("id", recipeTag.id.toString())
+        intent.putExtra(ListRecipe.EXTRA_RECIPE_TAG_ID, recipeTag.id.toString())
 
        // var name = getString(recipeTag.name)
 

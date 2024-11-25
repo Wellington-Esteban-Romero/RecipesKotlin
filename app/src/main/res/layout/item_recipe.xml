@@ -13,7 +13,7 @@
         app:cardElevation="8dp">
 
         <ImageView
-            android:id="@+id/imgCountry"
+            android:id="@+id/imgRecipeItem"
             android:layout_width="match_parent"
             android:layout_height="260dp"
             android:scaleType="centerCrop"
@@ -22,7 +22,7 @@
 
 
         <TextView
-            android:id="@+id/name"
+            android:id="@+id/nameItem"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"

@@ -1,19 +1,20 @@
 package com.superheroes.utils
 
+import com.taste.recipes.services.RecipeService
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 class RetrofitProvider {
 
-   /* companion object {
+    companion object {
 
-        private val BASE_URL = "https://superheroapi.com/api/9afdf0a4d31b4337bfe784d5d63722bc/"
+        private const val BASE_URL = "https://dummyjson.com/recipes/"
 
-        fun getRetrofit(): SuperheroService {
+        fun getRetrofit(): RecipeService {
             return Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
-                .build().create(SuperheroService::class.java)
+                .build().create(RecipeService::class.java)
         }
-    }*/
+    }
 }
