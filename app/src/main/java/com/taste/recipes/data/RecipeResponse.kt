@@ -3,7 +3,7 @@ package com.taste.recipes.data
 import com.google.gson.annotations.SerializedName
 
 data class RecipeResponse(
-    @SerializedName("recipes") val name: List<RecipeItemResponse>,
+    @SerializedName("recipes") val recipes: List<RecipeItemResponse>,
 ) {
 }
 

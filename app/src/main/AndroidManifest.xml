@@ -15,6 +15,9 @@
         android:theme="@style/Theme.RecipesKotlin"
         tools:targetApi="31">
         <activity
+            android:name=".activities.DetailsRecipe"
+            android:exported="false" />
+        <activity
             android:name=".activities.ListRecipe"
             android:exported="false" />
         <activity

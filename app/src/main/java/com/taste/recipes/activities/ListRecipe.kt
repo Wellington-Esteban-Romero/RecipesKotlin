@@ -1,16 +1,17 @@
 package com.taste.recipes.activities
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.superheroes.utils.RetrofitProvider
 import com.taste.recipes.R
 import com.taste.recipes.adapters.RecipeAdapter
+import com.taste.recipes.data.RecipeTag
 import com.taste.recipes.databinding.ActivityRecipeBinding
 import com.taste.recipes.services.RecipeService
 import com.taste.recipes.utils.Utils
@@ -54,6 +55,15 @@ class ListRecipe : AppCompatActivity() {
 
         getRecipe(Utils.getTag(id.toInt()))
 
+        recipeAdapter = RecipeAdapter() { recipeItem ->
+            onItemSelect()
+        }
+
+        binding.rvRecipe.apply {
+            layoutManager = LinearLayoutManager(this@ListRecipe)
+            adapter = recipeAdapter
+            hasFixedSize()
+        }
 
     }
 
@@ -67,22 +77,22 @@ class ListRecipe : AppCompatActivity() {
                     Log.i("Recipes Names", responseBody.toString())
 
                     runOnUiThread {
-                        recipeAdapter = RecipeAdapter() { recipeItem ->
-                            //onItemSelect(recipeItem)
-                        }
-
-                        binding.rvRecipe.apply {
-                            layoutManager = LinearLayoutManager(this@ListRecipe)
-                            adapter = recipeAdapter
-                            hasFixedSize()
-                        }
+                        recipeAdapter.loadRecipes(responseBody.recipes)
                     }
                 }
             }
         }
     }
 
-    private fun createRecipe () {
+    private fun onItemSelect(recipeTag: RecipeTag) {
+        val intent = Intent(this, ListRecipe::class.java)
+        intent.putExtra(DetailsRecipe.EXTRA_RECIPE_ID, recipeTag.id.toString())
 
+        // var name = getString(recipeTag.name)
+
+        /*if (!session.isFavorite(name))
+            session.saveHoroscope(name, SessionManager.DES_ACTIVE)*/
+
+        startActivity(intent)
     }
 }

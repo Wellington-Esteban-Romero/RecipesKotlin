@@ -9,7 +9,7 @@ import com.taste.recipes.R
 import com.taste.recipes.data.RecipeItemResponse
 import com.taste.recipes.databinding.ItemRecipeBinding
 
-class RecipeAdapter (private var superheros: List<RecipeItemResponse> = emptyList(),
+class RecipeAdapter (private var recipes: List<RecipeItemResponse> = emptyList(),
                      private val onClickListener: (RecipeItemResponse) -> Unit): RecyclerView.Adapter<SuperheroViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SuperheroViewHolder {
@@ -18,14 +18,19 @@ class RecipeAdapter (private var superheros: List<RecipeItemResponse> = emptyLis
         )
     }
 
-    override fun getItemCount() = superheros.size
+    override fun getItemCount() = recipes.size
 
     override fun onBindViewHolder(holder: SuperheroViewHolder, position: Int) {
-        holder.bind(superheros[position], onClickListener)
+        holder.bind(recipes[position], onClickListener)
     }
 
     fun updateSuperheroes (list: List<RecipeItemResponse>) {
-        superheros = list
+        recipes = list
+        notifyDataSetChanged()
+    }
+
+    fun loadRecipes(listRecipes: List<RecipeItemResponse>) {
+        this.recipes = listRecipes;
         notifyDataSetChanged()
     }
 }
