@@ -26,6 +26,7 @@ import kotlinx.coroutines.launch
 class ListRecipe : AppCompatActivity() {
 
     private lateinit var binding: ActivityRecipeBinding
+    private lateinit var recipeItem:List<RecipeItemResponse>
     private lateinit var recipeService: RecipeService
     private lateinit var recipeAdapter: RecipeAdapter
     private lateinit var nameCountry:String
@@ -122,7 +123,21 @@ class ListRecipe : AppCompatActivity() {
     }
 
     private fun searchByName (name: String) {
+        //binding.progressBar.isVisible = true
+        CoroutineScope(Dispatchers.IO).launch {
+            val response = recipeService.findRecipeByName(name)
 
+            if (response.isSuccessful) {
+                val responseBody = response.body()
+                if (responseBody != null) {
+                    Log.i("Superheroes", responseBody.toString())
+                    runOnUiThread {
+                        recipeAdapter.updateRecipes(responseBody.recipes)
+                        //binding.progressBar.isVisible = false
+                    }
+                }
+            }
+        }
     }
 
     private fun getSupportActionBarRecipes () {

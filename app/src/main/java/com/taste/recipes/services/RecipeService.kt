@@ -13,4 +13,7 @@ interface RecipeService {
 
     @GET("{id}")
     suspend fun findRecipeById(@Path("id") id:String): Response<RecipeItemResponse>
+
+    @GET("search?q={name}")
+    suspend fun findRecipeByName(@Path("name") name:String): Response<RecipeResponse>
 }

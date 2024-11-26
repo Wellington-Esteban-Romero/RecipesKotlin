@@ -36,7 +36,6 @@ class HoroscopeViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
     private val txtName = view.findViewById<TextView>(R.id.name)
     private val imgCountry = view.findViewById<ImageView>(R.id.imgCountry)
-    //private val favoriteImageView = view.findViewById<ImageView>(R.id.imgFavorite)
 
     fun render(recipeTag: RecipeTag, onClickListener: (RecipeTag) -> Unit) {
         val context = itemView.context
@@ -46,10 +45,5 @@ class HoroscopeViewHolder(view: View) : RecyclerView.ViewHolder(view) {
             onClickListener(recipeTag)
         }
         imgCountry.setImageResource(recipeTag.img)
-
-    /*if (SessionManager(context).isFavoritextName.text.toString()))
-        favoriteImageView.visibility = View.VISIBLE
-    else
-        favoriteImageView.visibility = View.GONE*/
     }
 }
