@@ -4,8 +4,11 @@ import android.content.Intent
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -88,8 +91,8 @@ class ListRecipe : AppCompatActivity() {
     }
 
     private fun onItemSelect(recipeItemResponse:RecipeItemResponse) {
-        val intent = Intent(this, ListRecipe::class.java)
-        intent.putExtra(DetailsRecipe.EXTRA_RECIPE_ID, recipeItemResponse.name.toString())
+        val intent = Intent(this, DetailsRecipe::class.java)
+        intent.putExtra(DetailsRecipe.EXTRA_RECIPE_ID, recipeItemResponse.id)
 
         // var name = getString(recipeTag.name)
 
@@ -97,6 +100,29 @@ class ListRecipe : AppCompatActivity() {
             session.saveHoroscope(name, SessionManager.DES_ACTIVE)*/
 
         startActivity(intent)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        val inflater = menuInflater
+        inflater.inflate(R.menu.search_recipe_menu, menu)
+        val searchItem: MenuItem = menu?.findItem(R.id.actionSearchRecipes)!!
+
+        val searchView: SearchView = searchItem.actionView as SearchView
+
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false;
+            }
+            override fun onQueryTextChange(newText: String?): Boolean {
+                searchByName(newText.orEmpty())
+                return false
+            }
+        })
+        return true
+    }
+
+    private fun searchByName (name: String) {
+
     }
 
     private fun getSupportActionBarRecipes () {

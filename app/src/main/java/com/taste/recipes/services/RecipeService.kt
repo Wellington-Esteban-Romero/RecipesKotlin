@@ -9,5 +9,8 @@ import retrofit2.http.Path
 interface RecipeService {
 
     @GET("tag/{country}")
-    suspend fun findRecipeByCountry(@Path("country") name:String): Response<RecipeResponse>
+    suspend fun findRecipeByCountry(@Path("country") country:String): Response<RecipeResponse>
+
+    @GET("{id}")
+    suspend fun findRecipeById(@Path("id") id:String): Response<RecipeItemResponse>
 }
