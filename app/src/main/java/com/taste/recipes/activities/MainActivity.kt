@@ -93,6 +93,8 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        recipeTagAdapter.filterCountry(recipeTags)
+
         /*if (recipeTags.isEmpty()) {
             list_horoscope.visibility = View.GONE
             msg_empty.visibility = View.VISIBLE
@@ -106,7 +108,7 @@ class MainActivity : AppCompatActivity() {
     private fun getSupportActionBarRecipes () {
         var supportActionBar = supportActionBar;
         supportActionBar?.setDisplayShowHomeEnabled(true);
-        supportActionBar?.title = "Recetas por País"
+        supportActionBar?.title = "Recipes for country"
         //supportActionBar?.setLogo(R.drawable.ic_zodiac);
         supportActionBar?.setDisplayUseLogoEnabled(true);
 

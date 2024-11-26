@@ -1,6 +1,7 @@
 package com.taste.recipes.activities
 
 import android.content.Intent
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.enableEdgeToEdge
@@ -24,6 +25,7 @@ class ListRecipe : AppCompatActivity() {
     private lateinit var binding: ActivityRecipeBinding
     private lateinit var recipeService: RecipeService
     private lateinit var recipeAdapter: RecipeAdapter
+    private lateinit var nameCountry:String
 
     companion object {
         const val EXTRA_RECIPE_TAG_ID = "RECIPE_TAG_ID"
@@ -41,9 +43,8 @@ class ListRecipe : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-
         init()
-
+        getSupportActionBarRecipes()
     }
 
     private fun init () {
@@ -52,6 +53,8 @@ class ListRecipe : AppCompatActivity() {
 
         val id = intent.getStringExtra(EXTRA_RECIPE_TAG_ID).orEmpty()
         println(id +" - " + Utils.getTag(id.toInt()))
+
+        nameCountry = Utils.getTag(id.toInt())
 
         getRecipe(Utils.getTag(id.toInt()))
 
@@ -94,5 +97,15 @@ class ListRecipe : AppCompatActivity() {
             session.saveHoroscope(name, SessionManager.DES_ACTIVE)*/
 
         startActivity(intent)
+    }
+
+    private fun getSupportActionBarRecipes () {
+        var supportActionBar = supportActionBar;
+        supportActionBar?.setDisplayShowHomeEnabled(true);
+        supportActionBar?.title = "Recipes $nameCountry"
+        supportActionBar?.setDisplayUseLogoEnabled(true);
+
+        val colorDrawable = ColorDrawable(getResources().getColor(R.color.menu_color, null))
+        supportActionBar!!.setBackgroundDrawable(colorDrawable)
     }
 }

@@ -20,7 +20,7 @@ class RecipeTagAdapter(
         )
     }
 
-    fun filterHoroscope(horoscope: List<RecipeTag>) {
+    fun filterCountry(horoscope: List<RecipeTag>) {
         this.tags = horoscope;
         notifyDataSetChanged()
     }
