@@ -1,4 +1,4 @@
-package com.superheroes.utils
+package com.taste.recipes.utils
 
 import com.taste.recipes.services.RecipeService
 import retrofit2.Retrofit

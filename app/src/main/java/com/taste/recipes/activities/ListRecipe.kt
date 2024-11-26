@@ -8,12 +8,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.superheroes.utils.RetrofitProvider
 import com.taste.recipes.R
 import com.taste.recipes.adapters.RecipeAdapter
-import com.taste.recipes.data.RecipeTag
+import com.taste.recipes.data.RecipeItemResponse
 import com.taste.recipes.databinding.ActivityRecipeBinding
 import com.taste.recipes.services.RecipeService
+import com.taste.recipes.utils.RetrofitProvider
 import com.taste.recipes.utils.Utils
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -56,7 +56,7 @@ class ListRecipe : AppCompatActivity() {
         getRecipe(Utils.getTag(id.toInt()))
 
         recipeAdapter = RecipeAdapter() { recipeItem ->
-            onItemSelect()
+            onItemSelect(recipeItem)
         }
 
         binding.rvRecipe.apply {
@@ -84,9 +84,9 @@ class ListRecipe : AppCompatActivity() {
         }
     }
 
-    private fun onItemSelect(recipeTag: RecipeTag) {
+    private fun onItemSelect(recipeItemResponse:RecipeItemResponse) {
         val intent = Intent(this, ListRecipe::class.java)
-        intent.putExtra(DetailsRecipe.EXTRA_RECIPE_ID, recipeTag.id.toString())
+        intent.putExtra(DetailsRecipe.EXTRA_RECIPE_ID, recipeItemResponse.name.toString())
 
         // var name = getString(recipeTag.name)
 
