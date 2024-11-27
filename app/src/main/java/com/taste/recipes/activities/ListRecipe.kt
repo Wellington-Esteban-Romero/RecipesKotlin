@@ -30,7 +30,7 @@ class ListRecipe : AppCompatActivity() {
     private lateinit var recipeItems:List<RecipeItemResponse>
     private lateinit var recipeService: RecipeService
     private lateinit var recipeAdapter: RecipeAdapter
-    private lateinit var nameCountry:String
+    private lateinit var country:String
 
     companion object {
         const val EXTRA_RECIPE_TAG_ID = "RECIPE_TAG_ID"
@@ -61,9 +61,9 @@ class ListRecipe : AppCompatActivity() {
         val id = intent.getStringExtra(EXTRA_RECIPE_TAG_ID).orEmpty()
         println(id +" - " + Utils.getTag(id.toInt()))
 
-        nameCountry = Utils.getTag(id.toInt())
+        country = Utils.getTag(id.toInt())
 
-        getRecipesByCountry(Utils.getTag(id.toInt()))
+        getRecipesByCountry(country)
 
         recipeAdapter = RecipeAdapter() { recipeItem ->
             onItemSelect(recipeItem)
@@ -163,7 +163,7 @@ class ListRecipe : AppCompatActivity() {
     private fun getSupportActionBarRecipes () {
         var supportActionBar = supportActionBar;
         supportActionBar?.setDisplayShowHomeEnabled(true);
-        supportActionBar?.title = "Recipes $nameCountry"
+        supportActionBar?.title = "Recipes $country"
         supportActionBar?.setDisplayUseLogoEnabled(true);
 
         val colorDrawable = ColorDrawable(getResources().getColor(R.color.menu_color, null))
