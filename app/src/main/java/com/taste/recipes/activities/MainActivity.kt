@@ -5,6 +5,8 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
@@ -21,6 +23,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var recipeTagAdapter: RecipeTagAdapter
     private lateinit var recipeTags: List<RecipeTag>
+    private lateinit var msg_empty: TextView
     private lateinit var rvTags: RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,7 +35,6 @@ class MainActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-        getSupportActionBarRecipes()
         init()
     }
 
@@ -42,6 +44,8 @@ class MainActivity : AppCompatActivity() {
 
         recipeTags = RecipeTagProvider.findAll()
 
+        msg_empty = findViewById(R.id.msg_empty)
+
         recipeTagAdapter = RecipeTagAdapter(recipeTags) { tag ->
             onItemSelect(tag)
         }
@@ -50,17 +54,13 @@ class MainActivity : AppCompatActivity() {
             layoutManager = GridLayoutManager(this@MainActivity, 2)
             adapter = recipeTagAdapter
         }
+
+        getSupportActionBarRecipes()
     }
 
     private fun onItemSelect(recipeTag: RecipeTag) {
         val intent = Intent(this, ListRecipe::class.java)
         intent.putExtra(ListRecipe.EXTRA_RECIPE_TAG_ID, recipeTag.id.toString())
-
-       // var name = getString(recipeTag.name)
-
-        /*if (!session.isFavorite(name))
-            session.saveHoroscope(name, SessionManager.DES_ACTIVE)*/
-
         startActivity(intent)
     }
 
@@ -92,8 +92,16 @@ class MainActivity : AppCompatActivity() {
                 recipeTags.add(item);
             }
         }
+       // recipeTagAdapter.filterCountry(recipeTags)
 
-        recipeTagAdapter.filterCountry(recipeTags)
+        if (recipeTags.isEmpty()) {
+            rvTags.visibility = View.GONE
+            msg_empty.visibility = View.VISIBLE
+        } else {
+            rvTags.visibility = View.VISIBLE
+            msg_empty.visibility = View.GONE
+            recipeTagAdapter.filterCountry(recipeTags)
+        }
     }
 
     private fun getSupportActionBarRecipes () {
@@ -106,5 +114,4 @@ class MainActivity : AppCompatActivity() {
         val colorDrawable = ColorDrawable(getResources().getColor(R.color.menu_color, null))
         supportActionBar!!.setBackgroundDrawable(colorDrawable)
     }
-
 }

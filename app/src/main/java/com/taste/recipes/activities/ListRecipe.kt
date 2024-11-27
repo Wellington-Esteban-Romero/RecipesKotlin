@@ -6,6 +6,8 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
@@ -30,6 +32,7 @@ class ListRecipe : AppCompatActivity() {
     private lateinit var recipeItems:List<RecipeItemResponse>
     private lateinit var recipeService: RecipeService
     private lateinit var recipeAdapter: RecipeAdapter
+    private lateinit var msg_empty: TextView
     private lateinit var country:String
 
     companion object {
@@ -50,13 +53,14 @@ class ListRecipe : AppCompatActivity() {
             insets
         }
         init()
-        getSupportActionBarRecipes()
     }
 
     private fun init () {
 
         recipeService = RetrofitProvider.getRetrofit()
         session = SessionManager(applicationContext)
+
+        msg_empty = findViewById(R.id.msg_empty_recipe)
 
         val id = intent.getStringExtra(EXTRA_RECIPE_TAG_ID).orEmpty()
         println(id +" - " + Utils.getTag(id.toInt()))
@@ -69,12 +73,12 @@ class ListRecipe : AppCompatActivity() {
             onItemSelect(recipeItem)
         }
 
-        binding.rvRecipe.apply {
+        binding.rvRecipes.apply {
             layoutManager = LinearLayoutManager(this@ListRecipe)
             adapter = recipeAdapter
             hasFixedSize()
         }
-
+        getSupportActionBarRecipes()
     }
 
     override fun onResume() {
@@ -104,10 +108,9 @@ class ListRecipe : AppCompatActivity() {
         val intent = Intent(this, DetailsRecipe::class.java)
         intent.putExtra(DetailsRecipe.EXTRA_RECIPE_ID, recipeItemResponse.id)
 
-        var id = recipeItemResponse.id
+        val id = recipeItemResponse.id
 
-        if (!session.isFavorite(id))
-            session.saveHoroscope(id, SessionManager.DES_ACTIVE)
+        if (!session.isFavorite(id)) session.saveHoroscope(id, SessionManager.DES_ACTIVE)
 
         startActivity(intent)
     }
@@ -145,19 +148,17 @@ class ListRecipe : AppCompatActivity() {
     }
 
     private fun searchByName (name: String) {
-        //binding.progressBar.isVisible = true
 
         val filteredList = recipeItems.filter { it.name.contains(name, true) }
-        recipeAdapter.updateRecipes(filteredList)
 
-        /*if (recipeTags.isEmpty()) {
-        list_horoscope.visibility = View.GONE
-        msg_empty.visibility = View.VISIBLE
+        if (recipeItems.isEmpty()) {
+            binding.rvRecipes.visibility = View.GONE
+            msg_empty.visibility = View.VISIBLE
         } else {
-            list_horoscope.visibility = View.VISIBLE
+            binding.rvRecipes.visibility = View.VISIBLE
             msg_empty.visibility = View.GONE
-            horoscopeAdapter.filterHoroscope(horoscopeList)
-        }*/
+            recipeAdapter.updateRecipes(filteredList)
+        }
     }
 
     private fun getSupportActionBarRecipes () {

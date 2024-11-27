@@ -15,4 +15,6 @@
 
     <string name="menu_recipe">Menú recipe</string>
     <string name="create_new">Create recipe</string>
+    <string name="not_found_country">Not found country</string>
+    <string name="not_found_recipe">Not found recipe</string>
 </resources>
