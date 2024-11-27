@@ -11,6 +11,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.squareup.picasso.Picasso
 import com.taste.recipes.R
+import com.taste.recipes.adapters.RecipeAdapter
 import com.taste.recipes.data.RecipeItemResponse
 import com.taste.recipes.databinding.ActivityDetailsRecipeBinding
 import com.taste.recipes.services.RecipeService
@@ -25,6 +26,7 @@ class DetailsRecipe : AppCompatActivity() {
     private lateinit var binding: ActivityDetailsRecipeBinding
     private lateinit var recipeService: RecipeService
     private lateinit var recipeItemResponse: RecipeItemResponse
+    private lateinit var recipeAdapter: RecipeAdapter
 
     companion object {
         const val EXTRA_RECIPE_ID = "RECIPE_ID"
@@ -47,11 +49,11 @@ class DetailsRecipe : AppCompatActivity() {
     }
 
     private fun init () {
-
-        recipeService = RetrofitProvider.getRetrofit()
-
         val recipe_id = intent.getStringExtra(EXTRA_RECIPE_ID).orEmpty()
         println("recipe -> ${recipe_id}")
+
+        recipeService = RetrofitProvider.getRetrofit()
+        session = SessionManager(applicationContext)
 
         getDetailRecipe(recipe_id)
         getSupportActionBarRecipes()
@@ -61,7 +63,9 @@ class DetailsRecipe : AppCompatActivity() {
         val inflater = menuInflater
         inflater.inflate(R.menu.details_recipe_menu, menu)
 
-        if (session.isFavorite(recipeItemResponse.id))
+        val recipe_id = intent.getStringExtra(EXTRA_RECIPE_ID).orEmpty()
+
+        if (session.isFavorite(recipe_id))
             menu.findItem(R.id.actionFavorite).setIcon(R.drawable.ic_favorite)
 
         return true
@@ -94,7 +98,7 @@ class DetailsRecipe : AppCompatActivity() {
                 val responseBody = response.body()
                 if (responseBody != null) {
                     Log.i("Recipe", responseBody.toString())
-
+                    recipeItemResponse = responseBody
                     runOnUiThread {
                         createDetails(responseBody)
                     }

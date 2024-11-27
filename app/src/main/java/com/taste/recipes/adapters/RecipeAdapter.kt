@@ -10,6 +10,7 @@ import com.taste.recipes.R
 import com.taste.recipes.data.RecipeItemResponse
 import com.taste.recipes.data.RecipeTag
 import com.taste.recipes.databinding.ItemRecipeBinding
+import com.taste.recipes.utils.SessionManager
 
 class RecipeAdapter (private var recipes: List<RecipeItemResponse> = emptyList(),
                      private val onClickListener: (RecipeItemResponse) -> Unit): RecyclerView.Adapter<SuperheroViewHolder>() {
@@ -35,23 +36,29 @@ class RecipeAdapter (private var recipes: List<RecipeItemResponse> = emptyList()
         this.recipes = listRecipes;
         notifyDataSetChanged()
     }
+
+    fun getRecipe (): List<RecipeItemResponse> {
+        return this.recipes
+    }
 }
 
 class SuperheroViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
     private val itemRecipeBinding = ItemRecipeBinding.bind(view)
-    //private val favoriteImageView = view.findViewById<ImageView>(R.id.imgFavorite)
+    private val favoriteImageView = view.findViewById<ImageView>(R.id.imgFavorite)
 
     fun bind(recipeItemResponse: RecipeItemResponse, onClickListener: (RecipeItemResponse) -> Unit) {
+        val context = itemView.context
+
         itemRecipeBinding.nameItem.text = recipeItemResponse.name
         Picasso.get().load(recipeItemResponse.image).into(itemRecipeBinding.imgRecipeItem);
         itemView.setOnClickListener {
             onClickListener(recipeItemResponse)
         }
 
-        /*if (SessionManager(context).isFavoritextName.text.toString()))
-                favoriteImageView.visibility = View.VISIBLE
-                    else
-                favoriteImageView.visibility = View.GONE*/
+        if (SessionManager(context).isFavorite(recipeItemResponse.id))
+            favoriteImageView.visibility = View.VISIBLE
+        else
+            favoriteImageView.visibility = View.GONE
     }
 }

@@ -5,6 +5,7 @@ import com.taste.recipes.data.RecipeResponse
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface RecipeService {
 
@@ -14,6 +15,6 @@ interface RecipeService {
     @GET("{id}")
     suspend fun findRecipeById(@Path("id") id:String): Response<RecipeItemResponse>
 
-    @GET("search?q={name}")
-    suspend fun findRecipeByName(@Path("name") name:String): Response<RecipeResponse>
+    @GET("search")
+    suspend fun findRecipeByName(@Query("q") q:String): Response<RecipeResponse>
 }

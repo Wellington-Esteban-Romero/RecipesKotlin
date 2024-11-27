@@ -94,15 +94,6 @@ class MainActivity : AppCompatActivity() {
         }
 
         recipeTagAdapter.filterCountry(recipeTags)
-
-        /*if (recipeTags.isEmpty()) {
-            list_horoscope.visibility = View.GONE
-            msg_empty.visibility = View.VISIBLE
-        } else {
-            list_horoscope.visibility = View.VISIBLE
-            msg_empty.visibility = View.GONE
-            horoscopeAdapter.filterHoroscope(horoscopeList)
-        }*/
     }
 
     private fun getSupportActionBarRecipes () {

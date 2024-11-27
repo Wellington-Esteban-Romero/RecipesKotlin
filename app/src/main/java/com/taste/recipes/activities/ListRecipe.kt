@@ -18,6 +18,7 @@ import com.taste.recipes.data.RecipeItemResponse
 import com.taste.recipes.databinding.ActivityRecipeBinding
 import com.taste.recipes.services.RecipeService
 import com.taste.recipes.utils.RetrofitProvider
+import com.taste.recipes.utils.SessionManager
 import com.taste.recipes.utils.Utils
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -33,6 +34,7 @@ class ListRecipe : AppCompatActivity() {
 
     companion object {
         const val EXTRA_RECIPE_TAG_ID = "RECIPE_TAG_ID"
+        lateinit var session: SessionManager
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -54,6 +56,7 @@ class ListRecipe : AppCompatActivity() {
     private fun init () {
 
         recipeService = RetrofitProvider.getRetrofit()
+        session = SessionManager(applicationContext)
 
         val id = intent.getStringExtra(EXTRA_RECIPE_TAG_ID).orEmpty()
         println(id +" - " + Utils.getTag(id.toInt()))
@@ -72,6 +75,11 @@ class ListRecipe : AppCompatActivity() {
             hasFixedSize()
         }
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+        recipeAdapter.notifyDataSetChanged()
     }
 
     private fun getRecipe (name: String) {
@@ -95,10 +103,10 @@ class ListRecipe : AppCompatActivity() {
         val intent = Intent(this, DetailsRecipe::class.java)
         intent.putExtra(DetailsRecipe.EXTRA_RECIPE_ID, recipeItemResponse.id)
 
-        // var name = getString(recipeTag.name)
+        var id = recipeItemResponse.id
 
-        /*if (!session.isFavorite(name))
-            session.saveHoroscope(name, SessionManager.DES_ACTIVE)*/
+        if (!session.isFavorite(id))
+            session.saveHoroscope(id, SessionManager.DES_ACTIVE)
 
         startActivity(intent)
     }
@@ -125,19 +133,30 @@ class ListRecipe : AppCompatActivity() {
     private fun searchByName (name: String) {
         //binding.progressBar.isVisible = true
         CoroutineScope(Dispatchers.IO).launch {
-            val response = recipeService.findRecipeByName(name)
+            if (name != null && name != "") {
+                val response = recipeService.findRecipeByName(name)
 
-            if (response.isSuccessful) {
-                val responseBody = response.body()
-                if (responseBody != null) {
-                    Log.i("Superheroes", responseBody.toString())
-                    runOnUiThread {
-                        recipeAdapter.updateRecipes(responseBody.recipes)
-                        //binding.progressBar.isVisible = false
+                if (response.isSuccessful) {
+                    val responseBody = response.body()
+                    if (responseBody != null) {
+                        Log.i("Superheroes", responseBody.toString())
+                        runOnUiThread {
+                            recipeAdapter.updateRecipes(responseBody.recipes)
+                            //binding.progressBar.isVisible = false
+                        }
                     }
                 }
             }
         }
+
+        /*if (recipeTags.isEmpty()) {
+        list_horoscope.visibility = View.GONE
+        msg_empty.visibility = View.VISIBLE
+        } else {
+            list_horoscope.visibility = View.VISIBLE
+            msg_empty.visibility = View.GONE
+            horoscopeAdapter.filterHoroscope(horoscopeList)
+        }*/
     }
 
     private fun getSupportActionBarRecipes () {
