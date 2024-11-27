@@ -27,7 +27,7 @@ import kotlinx.coroutines.launch
 class ListRecipe : AppCompatActivity() {
 
     private lateinit var binding: ActivityRecipeBinding
-    private lateinit var recipeItem:List<RecipeItemResponse>
+    private lateinit var recipeItems:List<RecipeItemResponse>
     private lateinit var recipeService: RecipeService
     private lateinit var recipeAdapter: RecipeAdapter
     private lateinit var nameCountry:String
@@ -63,7 +63,7 @@ class ListRecipe : AppCompatActivity() {
 
         nameCountry = Utils.getTag(id.toInt())
 
-        getRecipe(Utils.getTag(id.toInt()))
+        getRecipesByCountry(Utils.getTag(id.toInt()))
 
         recipeAdapter = RecipeAdapter() { recipeItem ->
             onItemSelect(recipeItem)
@@ -82,9 +82,9 @@ class ListRecipe : AppCompatActivity() {
         recipeAdapter.notifyDataSetChanged()
     }
 
-    private fun getRecipe (name: String) {
+    private fun getRecipesByCountry (country: String) {
         CoroutineScope(Dispatchers.IO).launch {
-            val response = recipeService.findRecipeByCountry(name)
+            val response = recipeService.findRecipeByCountry(country)
 
             if (response.isSuccessful) {
                 val responseBody = response.body()
@@ -92,7 +92,8 @@ class ListRecipe : AppCompatActivity() {
                     Log.i("Recipes Names", responseBody.toString())
 
                     runOnUiThread {
-                        recipeAdapter.loadRecipes(responseBody.recipes)
+                        recipeItems = responseBody.recipes
+                        recipeAdapter.updateRecipes(recipeItems)
                     }
                 }
             }
@@ -130,24 +131,24 @@ class ListRecipe : AppCompatActivity() {
         return true
     }
 
-    private fun searchByName (name: String) {
-        //binding.progressBar.isVisible = true
-        CoroutineScope(Dispatchers.IO).launch {
-            if (name != null && name != "") {
-                val response = recipeService.findRecipeByName(name)
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        println(item.icon)
 
-                if (response.isSuccessful) {
-                    val responseBody = response.body()
-                    if (responseBody != null) {
-                        Log.i("Superheroes", responseBody.toString())
-                        runOnUiThread {
-                            recipeAdapter.updateRecipes(responseBody.recipes)
-                            //binding.progressBar.isVisible = false
-                        }
-                    }
-                }
+        when (item.itemId) {
+            R.id.create_new_recipe -> {
+                // Crear tarea
+                val intent = Intent(this, CreateRecipe::class.java)
+                startActivity(intent)
             }
         }
+        return super.onOptionsItemSelected(item)
+    }
+
+    private fun searchByName (name: String) {
+        //binding.progressBar.isVisible = true
+
+        val filteredList = recipeItems.filter { it.name.contains(name, true) }
+        recipeAdapter.updateRecipes(filteredList)
 
         /*if (recipeTags.isEmpty()) {
         list_horoscope.visibility = View.GONE

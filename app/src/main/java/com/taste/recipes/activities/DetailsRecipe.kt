@@ -110,11 +110,15 @@ class DetailsRecipe : AppCompatActivity() {
     private fun createDetails (recipeItemResponse: RecipeItemResponse) {
         Picasso.get().load(recipeItemResponse.image).into(binding.imgDetailRecipeItem)
          for (ingredient in recipeItemResponse.ingredients) {
-            binding.txtIngredient.text = "${binding.txtIngredient.text}\n${ingredient}"
+            binding.txtIngredients.text = "${binding.txtIngredients.text}\n\n${ingredient}"
+        }
+
+        for (instruction in recipeItemResponse.instructions) {
+            binding.txtInstructions.text = "${binding.txtInstructions.text}\n\n${instruction}"
         }
     }
 
-    private fun getSupportActionBarRecipes () {
+        private fun getSupportActionBarRecipes () {
         var supportActionBar = supportActionBar;
         supportActionBar?.setDisplayShowHomeEnabled(true);
         supportActionBar?.title = "Detail Recipes"

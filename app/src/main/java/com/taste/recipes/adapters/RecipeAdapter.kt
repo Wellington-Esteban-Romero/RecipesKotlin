@@ -32,11 +32,6 @@ class RecipeAdapter (private var recipes: List<RecipeItemResponse> = emptyList()
         notifyDataSetChanged()
     }
 
-    fun loadRecipes(listRecipes: List<RecipeItemResponse>) {
-        this.recipes = listRecipes;
-        notifyDataSetChanged()
-    }
-
     fun getRecipe (): List<RecipeItemResponse> {
         return this.recipes
     }

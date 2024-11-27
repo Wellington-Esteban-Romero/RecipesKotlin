@@ -11,4 +11,8 @@
     <string name="spanish_tag">Spanish</string>
     <string name="vietnamese_tag">Vietnamese</string>
     <string name="cuban_tag">Cuban</string>
+
+
+    <string name="menu_recipe">Menú recipe</string>
+    <string name="create_new">Create recipe</string>
 </resources>
