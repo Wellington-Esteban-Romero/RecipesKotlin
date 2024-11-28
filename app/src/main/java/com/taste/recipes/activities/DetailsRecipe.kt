@@ -14,6 +14,8 @@ import com.squareup.picasso.Picasso
 import com.taste.recipes.R
 import com.taste.recipes.adapters.RecipeAdapter
 import com.taste.recipes.data.RecipeItemResponse
+import com.taste.recipes.data.entities.Recipe
+import com.taste.recipes.data.providers.RecipeDAO
 import com.taste.recipes.databinding.ActivityDetailsRecipeBinding
 import com.taste.recipes.data.providers.RetrofitProvider
 import com.taste.recipes.services.RecipeService
@@ -27,6 +29,7 @@ class DetailsRecipe : AppCompatActivity() {
     private lateinit var binding: ActivityDetailsRecipeBinding
     private lateinit var recipeService: RecipeService
     private lateinit var recipeItemResponse: RecipeItemResponse
+    private lateinit var recipeDAO: RecipeDAO
     private lateinit var recipeAdapter: RecipeAdapter
 
     companion object {
@@ -54,9 +57,16 @@ class DetailsRecipe : AppCompatActivity() {
         println("recipe -> ${recipe_id}")
 
         recipeService = RetrofitProvider.getRetrofit()
+
         session = SessionManager(applicationContext)
 
+        recipeDAO = RecipeDAO(this)
+
+        //val recipes:List<Recipe> = recipeDAO.findRecipeById(recipe_id)
+
+
         getDetailRecipe(recipe_id)
+
         getSupportActionBarRecipes()
     }
 
@@ -116,6 +126,17 @@ class DetailsRecipe : AppCompatActivity() {
 
         for (instruction in recipeItemResponse.instructions) {
             binding.txtInstructions.text = "${binding.txtInstructions.text}\n\n${instruction}"
+        }
+    }
+
+    private fun createDetailsRecipeDAO (recipe: Recipe) {
+        Picasso.get().load("https://cdn.dummyjson.com/recipe-images/1.webp").into(binding.imgDetailRecipeItem)
+        for (ingredient in recipe.ingredients) {
+            binding.txtIngredients.text = "${binding.txtIngredients.text} + ${ingredient}"
+        }
+
+        for (instruction in recipe.instructions) {
+            binding.txtInstructions.text = "${binding.txtInstructions.text} + ${instruction}"
         }
     }
 

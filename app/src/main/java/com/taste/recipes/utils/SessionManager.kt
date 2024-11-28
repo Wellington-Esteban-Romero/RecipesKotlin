@@ -11,6 +11,7 @@ class SessionManager(context: Context) {
 
     private val SHARED_NAME = "Mydtb"
     private val SHARED_NAME_RECIPE = "recipe"
+    private val SHARED_NAME_RECIPES = "recipes"
 
     private val storage = context.getSharedPreferences(SHARED_NAME, Context.MODE_PRIVATE);
 
@@ -24,5 +25,13 @@ class SessionManager(context: Context) {
 
     fun isFavorite (id:String):Boolean {
         return (getRecipe (id) == ACTIVE)
+    }
+
+    fun saveRecipes (key:String ,value:String) {
+        storage.edit().putString(SHARED_NAME_RECIPES + key, value).apply()
+    }
+
+    fun getRecipes (key:String):String {
+        return storage.getString(SHARED_NAME_RECIPES + key, "")!!
     }
 }

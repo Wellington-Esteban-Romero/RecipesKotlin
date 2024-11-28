@@ -51,26 +51,6 @@ class CreateRecipe : AppCompatActivity() {
         recipe = Recipe(-1,"")
 
         getSupportActionBarRecipes()
-
-        //btnAddIngredient = findViewById(R.id.btnAddIngredient)
-        //txtAddIngredient = findViewById(R.id.txtAddIngredient)
-
-       /* btnAddIngredient.setOnClickListener {
-
-            val view:View = LayoutInflater.from(this).inflate(R.layout.dialog_recipe, null)
-
-            val editText:TextInputEditText = view.findViewById(R.id.textDialogFieldIngredient)
-
-            MaterialAlertDialogBuilder(this)
-                .setTitle("add Ingredient")
-                .setView(view)
-                .setPositiveButton(android.R.string.ok) { dialog, which ->
-                    println(editText.text.toString())
-                    txtAddIngredient.text = "${txtAddIngredient.text}\n\n${editText.text}"
-                }
-                .setNegativeButton(android.R.string.cancel, null)
-                .show()
-        }*/
     }
 
     private fun validateTask(): Boolean {
@@ -94,6 +74,7 @@ class CreateRecipe : AppCompatActivity() {
         recipe.title = binding.textFieldTitleName.editText?.text.toString()
         recipe.ingredients = binding.textFieldIngredient.editText?.text.toString()
         recipe.instructions = binding.textFieldInstructions.editText?.text.toString()
+        recipe.category = intent.getStringExtra(EXTRA_RECIPE_CREATE_TAG_ID).orEmpty()
 
         if (validateTask()) {
             // Si la tarea existe la actualizamos si no la insertamos

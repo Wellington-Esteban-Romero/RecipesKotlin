@@ -8,7 +8,7 @@ class RetrofitProvider {
 
     companion object {
 
-        private const val BASE_URL = "https://dummyjson.com/recipes/"
+        private const val BASE_URL = "https://dummyjson.com/"
 
         fun getRetrofit(): RecipeService {
             return Retrofit.Builder()

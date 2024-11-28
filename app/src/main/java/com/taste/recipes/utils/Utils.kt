@@ -23,5 +23,26 @@ class Utils {
             )
             return recipeTag[id - 1]
         }
+
+        fun getCategoria (cuisine:String): Int {
+            val cuisines = listOf(
+                "Italian",
+                "Indian",
+                "Pakistani",
+                "Japanese",
+                "Korean",
+                "Mexican",
+                "Russian",
+                "Spanish",
+                "Vietnamese",
+                "Cuban",
+                "Brazilian",
+                "Moroccan",
+                "Lebanese",
+                "Hawaiian"
+            )
+
+            return cuisines.indexOf(cuisine) + 1
+        }
     }
 }

@@ -9,7 +9,7 @@ class DatabaseManager(context: Context) : SQLiteOpenHelper(context, DATABASE_NAM
 
     companion object {
         // If you change the database schema, you must increment the database version.
-        const val DATABASE_VERSION = 2
+        const val DATABASE_VERSION = 6
         const val DATABASE_NAME = "RecipesDatabase.db"
 
 
@@ -18,7 +18,13 @@ class DatabaseManager(context: Context) : SQLiteOpenHelper(context, DATABASE_NAM
                     "${Recipe.COLUMN_ID} INTEGER PRIMARY KEY AUTOINCREMENT," +
                     "${Recipe.COLUMN_NAME_TITLE} TEXT," +
                     "${Recipe.COLUMN_INGREDIENTS} TEXT," +
-                    "${Recipe.COLUMN_INSTRUCTIONS} TEXT)"
+                    "${Recipe.COLUMN_INSTRUCTIONS} TEXT," +
+                    "${Recipe.COLUMN_PREP_TIME_MINUTES} TEXT," +
+                    "${Recipe.COLUMN_COOK_TIME_MINUTES} TEXT," +
+                    "${Recipe.COLUMN_SERVINGS} TEXT," +
+                    "${Recipe.COLUMN_DIFFICULTY} TEXT," +
+                    "${Recipe.COLUMN_IMG} TEXT," +
+                    "${Recipe.COLUMN_CATEGORY} TEXT)"
 
         private const val SQL_DELETE_TABLE = "DROP TABLE IF EXISTS ${Recipe.TABLE_NAME}"
     }

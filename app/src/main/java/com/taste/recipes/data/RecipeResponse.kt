@@ -1,9 +1,10 @@
 package com.taste.recipes.data
 
 import com.google.gson.annotations.SerializedName
+import com.taste.recipes.data.entities.Recipe
 
 data class RecipeResponse(
-    @SerializedName("recipes") val recipes: List<RecipeItemResponse>,
+    @SerializedName("recipes") val recipes: MutableList<RecipeItemResponse>,
     @SerializedName("total") val total: Int,
 ) {
 }

@@ -12,6 +12,14 @@
         android:title="TODO"
         app:showAsAction="always"/>
 
+    <item
+        android:id="@+id/actionDelete"
+        android:icon="@drawable/ic_delete"
+        android:orderInCategory="100"
+        android:title="TODO"
+        app:showAsAction="always"
+        android:visible="false"/>
+
    <!-- <item
         android:id="@+id/actionShare"
         android:icon="@drawable/ic_share"

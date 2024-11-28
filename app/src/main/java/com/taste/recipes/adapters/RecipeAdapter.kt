@@ -8,12 +8,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import com.taste.recipes.R
 import com.taste.recipes.data.RecipeItemResponse
-import com.taste.recipes.data.RecipeTag
+import com.taste.recipes.data.entities.Recipe
 import com.taste.recipes.databinding.ItemRecipeBinding
 import com.taste.recipes.utils.SessionManager
 
-class RecipeAdapter (private var recipes: List<RecipeItemResponse> = emptyList(),
-                     private val onClickListener: (RecipeItemResponse) -> Unit): RecyclerView.Adapter<SuperheroViewHolder>() {
+class RecipeAdapter (private var recipes: List<Recipe> = emptyList(),
+                     private val onClickListener: (Recipe) -> Unit): RecyclerView.Adapter<SuperheroViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SuperheroViewHolder {
         return SuperheroViewHolder(
@@ -27,13 +27,9 @@ class RecipeAdapter (private var recipes: List<RecipeItemResponse> = emptyList()
         holder.bind(recipes[position], onClickListener)
     }
 
-    fun updateRecipes (list: List<RecipeItemResponse>) {
+    fun updateRecipes (list: List<Recipe>) {
         recipes = list
         notifyDataSetChanged()
-    }
-
-    fun getRecipe (): List<RecipeItemResponse> {
-        return this.recipes
     }
 }
 
@@ -42,16 +38,21 @@ class SuperheroViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     private val itemRecipeBinding = ItemRecipeBinding.bind(view)
     private val favoriteImageView = view.findViewById<ImageView>(R.id.imgFavorite)
 
-    fun bind(recipeItemResponse: RecipeItemResponse, onClickListener: (RecipeItemResponse) -> Unit) {
+    fun bind(recipe: Recipe, onClickListener: (Recipe) -> Unit) {
         val context = itemView.context
 
-        itemRecipeBinding.nameItem.text = recipeItemResponse.name
-        Picasso.get().load(recipeItemResponse.image).into(itemRecipeBinding.imgRecipeItem);
+        itemRecipeBinding.nameItem.text = recipe.title
+
+        if (recipe.img.isNotEmpty())
+            Picasso.get().load(recipe.img).into(itemRecipeBinding.imgRecipeItem)
+        else
+            Picasso.get().load("https://cdn.dummyjson.com/recipe-images/1.webp").into(itemRecipeBinding.imgRecipeItem)
+
         itemView.setOnClickListener {
-            onClickListener(recipeItemResponse)
+            onClickListener(recipe)
         }
 
-        if (SessionManager(context).isFavorite(recipeItemResponse.id))
+        if (SessionManager(context).isFavorite(recipe.id.toString()))
             favoriteImageView.visibility = View.VISIBLE
         else
             favoriteImageView.visibility = View.GONE

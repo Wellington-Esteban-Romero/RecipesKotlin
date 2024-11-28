@@ -17,6 +17,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.taste.recipes.R
 import com.taste.recipes.adapters.RecipeAdapter
 import com.taste.recipes.data.RecipeItemResponse
+import com.taste.recipes.data.entities.Recipe
+import com.taste.recipes.data.providers.RecipeDAO
 import com.taste.recipes.databinding.ActivityRecipeBinding
 import com.taste.recipes.data.providers.RetrofitProvider
 import com.taste.recipes.services.RecipeService
@@ -29,9 +31,11 @@ import kotlinx.coroutines.launch
 class ListRecipe : AppCompatActivity() {
 
     private lateinit var binding: ActivityRecipeBinding
-    private lateinit var recipeItems:List<RecipeItemResponse>
+    private lateinit var recipeItems:List<Recipe>
     private lateinit var recipeService: RecipeService
     private lateinit var recipeAdapter: RecipeAdapter
+    private lateinit var recipeDAO: RecipeDAO
+    private var recipeList: MutableList<Recipe> = mutableListOf()
     private lateinit var msg_empty: TextView
     private lateinit var country:String
 
@@ -58,7 +62,10 @@ class ListRecipe : AppCompatActivity() {
     private fun init () {
 
         recipeService = RetrofitProvider.getRetrofit()
+
         session = SessionManager(applicationContext)
+
+        recipeDAO = RecipeDAO(this)
 
         msg_empty = findViewById(R.id.msg_empty_recipe)
 
@@ -67,7 +74,11 @@ class ListRecipe : AppCompatActivity() {
 
         country = Utils.getTag(id.toInt())
 
-        getRecipesByCountry(country)
+        val recipes:List<Recipe> = recipeDAO.findAllByCategory(id)
+        recipeItems = recipes
+        recipeAdapter.updateRecipes(recipeItems)
+
+        //getRecipesByCountry(country)
 
         recipeAdapter = RecipeAdapter() { recipeItem ->
             onItemSelect(recipeItem)
@@ -86,7 +97,7 @@ class ListRecipe : AppCompatActivity() {
         recipeAdapter.notifyDataSetChanged()
     }
 
-    private fun getRecipesByCountry (country: String) {
+    /*private fun getRecipesByCountry (country: String) {
         CoroutineScope(Dispatchers.IO).launch {
             val response = recipeService.findRecipeByCountry(country)
 
@@ -102,15 +113,43 @@ class ListRecipe : AppCompatActivity() {
                 }
             }
         }
-    }
+    }*/
 
-    private fun onItemSelect(recipeItemResponse:RecipeItemResponse) {
+   /* private fun getRecipesByCountry2 (country: String) {
+        CoroutineScope(Dispatchers.IO).launch {
+            val response = recipeService.findRecipeByCountry(country)
+
+            if (response.isSuccessful) {
+                val responseBody = response.body()
+                if (responseBody != null) {
+                    Log.i("Recipes Names", responseBody.toString())
+
+                    runOnUiThread {
+                        recipeItems = responseBody.recipes
+
+                        recipeList = recipeDAO.findAllByCategory(intent.getStringExtra(EXTRA_RECIPE_TAG_ID).orEmpty()).toMutableList()
+
+                        recipeList.filter { recipe ->
+                            recipeItems.add(RecipeItemResponse(recipe.id.toString(), recipe.title, recipe.ingredients.split(","),
+                                recipe.instructions.split(","), 0, 0, "",
+                                "", "", 0, "")
+                            )
+                        }
+
+                        recipeAdapter.updateRecipes(recipeItems)
+                    }
+                }
+            }
+        }
+    }*/
+
+    private fun onItemSelect(recipe: Recipe) {
         val intent = Intent(this, DetailsRecipe::class.java)
-        intent.putExtra(DetailsRecipe.EXTRA_RECIPE_ID, recipeItemResponse.id)
+        intent.putExtra(DetailsRecipe.EXTRA_RECIPE_ID, recipe.id)
 
-        val id = recipeItemResponse.id
+        val id = recipe.id
 
-        if (!session.isFavorite(id)) session.saveRecipe(id, SessionManager.DES_ACTIVE)
+        if (!session.isFavorite(id.toString())) session.saveRecipe(id.toString(), SessionManager.DES_ACTIVE)
 
         startActivity(intent)
     }
@@ -153,7 +192,7 @@ class ListRecipe : AppCompatActivity() {
 
     private fun searchByName (name: String) {
 
-        val filteredList = recipeItems.filter { it.name.contains(name, true) }
+        val filteredList = recipeItems.filter { it.title.contains(name, true) }
 
         if (recipeItems.isEmpty()) {
             binding.rvRecipes.visibility = View.GONE
