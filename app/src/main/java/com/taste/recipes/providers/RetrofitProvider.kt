@@ -1,4 +1,4 @@
-package com.taste.recipes.utils
+package com.taste.recipes.providers
 
 import com.taste.recipes.services.RecipeService
 import retrofit2.Retrofit

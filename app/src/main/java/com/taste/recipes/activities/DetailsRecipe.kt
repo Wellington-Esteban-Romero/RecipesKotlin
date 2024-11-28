@@ -15,8 +15,8 @@ import com.taste.recipes.R
 import com.taste.recipes.adapters.RecipeAdapter
 import com.taste.recipes.data.RecipeItemResponse
 import com.taste.recipes.databinding.ActivityDetailsRecipeBinding
+import com.taste.recipes.providers.RetrofitProvider
 import com.taste.recipes.services.RecipeService
-import com.taste.recipes.utils.RetrofitProvider
 import com.taste.recipes.utils.SessionManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -124,8 +124,9 @@ class DetailsRecipe : AppCompatActivity() {
         supportActionBar?.setDisplayShowHomeEnabled(true)
         supportActionBar?.title = "Detail Recipes"
         supportActionBar?.setDisplayUseLogoEnabled(true)
-        //val colorDrawable = ColorDrawable(Color.TRANSPARENT, null)
-        supportActionBar!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        val colorDrawable = ColorDrawable(getResources().getColor(R.color.menu_color, null))
+        supportActionBar!!.setBackgroundDrawable(colorDrawable)
+        //supportActionBar!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
     }
 }

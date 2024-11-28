@@ -17,7 +17,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.taste.recipes.R
 import com.taste.recipes.adapters.RecipeTagAdapter
 import com.taste.recipes.data.RecipeTag
-import com.taste.recipes.utils.RecipeTagProvider
+import com.taste.recipes.providers.RecipeTagProvider
 
 class MainActivity : AppCompatActivity() {
 
