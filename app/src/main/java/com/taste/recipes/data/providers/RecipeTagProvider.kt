@@ -16,7 +16,11 @@ class RecipeTagProvider {
             RecipeTag(7, R.string.russian_tag, R.drawable.ic_russia),
             RecipeTag(8, R.string.spanish_tag, R.drawable.ic_spain),
             RecipeTag(9, R.string.vietnamese_tag, R.drawable.ic_vietnam),
-            RecipeTag(10, R.string.cuban_tag, R.drawable.ic_cuba)
+            RecipeTag(10, R.string.cuban_tag, R.drawable.ic_cuba),
+            RecipeTag(11, R.string.brazilian_tag, R.drawable.ic_cuba),
+            RecipeTag(12, R.string.moroccan_tag, R.drawable.ic_cuba),
+            RecipeTag(13, R.string.lebanese_tag, R.drawable.ic_cuba),
+            RecipeTag(14, R.string.hawaiian_tag, R.drawable.ic_cuba)
         )
 
         fun findAll(): List<RecipeTag> {

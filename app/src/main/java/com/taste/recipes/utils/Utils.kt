@@ -15,7 +15,11 @@ class Utils {
                 "Russian",
                 "Spanish",
                 "Vietnamese",
-                "Cuban"
+                "Cuban",
+                "Brazilian",
+                "Moroccan",
+                "Lebanese",
+                "Hawaiian"
             )
             return recipeTag[id - 1]
         }

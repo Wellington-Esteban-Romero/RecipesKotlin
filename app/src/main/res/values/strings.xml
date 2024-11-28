@@ -11,6 +11,10 @@
     <string name="spanish_tag">Spanish</string>
     <string name="vietnamese_tag">Vietnamese</string>
     <string name="cuban_tag">Cuban</string>
+    <string name="brazilian_tag">Brazilian</string>
+    <string name="moroccan_tag">Moroccan</string>
+    <string name="lebanese_tag">Lebanese</string>
+    <string name="hawaiian_tag">Hawaiian</string>
 
 
     <string name="menu_recipe">Menú recipe</string>
