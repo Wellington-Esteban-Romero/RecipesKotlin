@@ -18,7 +18,7 @@ import com.taste.recipes.R
 import com.taste.recipes.adapters.RecipeAdapter
 import com.taste.recipes.data.RecipeItemResponse
 import com.taste.recipes.databinding.ActivityRecipeBinding
-import com.taste.recipes.providers.RetrofitProvider
+import com.taste.recipes.data.providers.RetrofitProvider
 import com.taste.recipes.services.RecipeService
 import com.taste.recipes.utils.SessionManager
 import com.taste.recipes.utils.Utils
@@ -141,6 +141,10 @@ class ListRecipe : AppCompatActivity() {
             R.id.create_new_recipe -> {
                 // Crear tarea
                 val intent = Intent(this, CreateRecipe::class.java)
+                intent.putExtra(
+                    CreateRecipe.EXTRA_RECIPE_CREATE_TAG_ID,
+                    this.intent.getStringExtra(EXTRA_RECIPE_TAG_ID).orEmpty()
+                )
                 startActivity(intent)
             }
         }

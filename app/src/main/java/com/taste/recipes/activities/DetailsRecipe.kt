@@ -15,7 +15,7 @@ import com.taste.recipes.R
 import com.taste.recipes.adapters.RecipeAdapter
 import com.taste.recipes.data.RecipeItemResponse
 import com.taste.recipes.databinding.ActivityDetailsRecipeBinding
-import com.taste.recipes.providers.RetrofitProvider
+import com.taste.recipes.data.providers.RetrofitProvider
 import com.taste.recipes.services.RecipeService
 import com.taste.recipes.utils.SessionManager
 import kotlinx.coroutines.CoroutineScope

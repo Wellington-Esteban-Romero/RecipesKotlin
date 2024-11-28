@@ -1,4 +1,4 @@
-package com.taste.recipes.providers
+package com.taste.recipes.data.providers
 
 import com.taste.recipes.R
 import com.taste.recipes.data.RecipeTag

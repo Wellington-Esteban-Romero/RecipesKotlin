@@ -10,7 +10,7 @@
     android:background="@color/white">
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textField"
+        android:id="@+id/textFieldTitleName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -70,11 +70,11 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
-        android:id="@+id/submit"
+        android:id="@+id/saveRecipe"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Submit"
-        android:textSize="26dp"
+        android:textSize="26sp"
         android:height="64dp"
         android:backgroundTint="@color/menu_color"
         android:layout_marginTop="20dp"

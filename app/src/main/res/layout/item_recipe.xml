@@ -14,7 +14,7 @@
                     android:id="@+id/imgRecipeItem"
                     android:layout_width="match_parent"
                     android:layout_height="260dp"
-                    android:layout_marginBottom="20dp"
+                    android:layout_marginBottom="30dp"
                     android:scaleType="centerCrop"
                     >
                 </ImageView>
@@ -39,8 +39,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="start"
-                    android:layout_marginTop="4dp"
-                    android:textSize="16dp"
+                    android:textSize="18sp"
                     android:textColor="@color/black"
                     android:textStyle="bold"
                     android:layout_gravity="bottom">

@@ -1,10 +1,10 @@
-package com.taste.recipes.entities
+package com.taste.recipes.data.entities
 
 data class Recipe (
     val id: Long,
     var title: String,
-    var ingredients: String,
-    var instructions: String,
+    var ingredients: String = "",
+    var instructions: String = "",
 ) {
 
     companion object {
