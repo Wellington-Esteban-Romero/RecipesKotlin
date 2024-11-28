@@ -74,12 +74,6 @@ class ListRecipe : AppCompatActivity() {
 
         country = Utils.getTag(id.toInt())
 
-        val recipes:List<Recipe> = recipeDAO.findAllByCategory(id)
-        recipeItems = recipes
-        recipeAdapter.updateRecipes(recipeItems)
-
-        //getRecipesByCountry(country)
-
         recipeAdapter = RecipeAdapter() { recipeItem ->
             onItemSelect(recipeItem)
         }
@@ -89,6 +83,11 @@ class ListRecipe : AppCompatActivity() {
             adapter = recipeAdapter
             hasFixedSize()
         }
+
+        val recipes:List<Recipe> = recipeDAO.findAllByCategory(id)
+        recipeItems = recipes
+        recipeAdapter.updateRecipes(recipeItems)
+
         getSupportActionBarRecipes()
     }
 
@@ -145,12 +144,9 @@ class ListRecipe : AppCompatActivity() {
 
     private fun onItemSelect(recipe: Recipe) {
         val intent = Intent(this, DetailsRecipe::class.java)
-        intent.putExtra(DetailsRecipe.EXTRA_RECIPE_ID, recipe.id)
+        intent.putExtra(DetailsRecipe.EXTRA_RECIPE_ID, recipe.id.toString())
 
-        val id = recipe.id
-
-        if (!session.isFavorite(id.toString())) session.saveRecipe(id.toString(), SessionManager.DES_ACTIVE)
-
+        if (!session.isFavorite(recipe.id.toString())) session.saveRecipe(recipe.id.toString(), SessionManager.DES_ACTIVE)
         startActivity(intent)
     }
 

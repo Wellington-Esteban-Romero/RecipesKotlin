@@ -61,10 +61,9 @@ class MainActivity : AppCompatActivity() {
 
         recipeService = RetrofitProvider.getRetrofit()
 
-        //
         //recipeDAO= RecipeDAO(this)
         //recipeDAO.deleteAll()
-        getAllRecipes()
+       //getAllRecipes()
 
         rvTags = findViewById(R.id.rvTags)
 
@@ -156,8 +155,8 @@ class MainActivity : AppCompatActivity() {
 
         for (repice in recipeResponse.recipes) {
             recipeDAO.insert(
-                Recipe(repice.id.toLong(),repice.name, repice.ingredients.toString(),
-                    repice.instructions.toString(), repice.prepTimeMinutes, repice.cookTimeMinutes,
+                Recipe(repice.id.toLong(),repice.name, repice.ingredients.joinToString(", ") ,
+                    repice.instructions.joinToString(", "), repice.prepTimeMinutes, repice.cookTimeMinutes,
                     repice.servings, repice.difficulty, repice.image, Utils.getCategoria(repice.cuisine).toString())
             )
         }

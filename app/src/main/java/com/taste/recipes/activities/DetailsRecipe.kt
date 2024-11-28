@@ -62,10 +62,11 @@ class DetailsRecipe : AppCompatActivity() {
 
         recipeDAO = RecipeDAO(this)
 
-        //val recipes:List<Recipe> = recipeDAO.findRecipeById(recipe_id)
+        val recipes:List<Recipe> = recipeDAO.findRecipeById(recipe_id)
 
+        createDetails(recipes)
 
-        getDetailRecipe(recipe_id)
+        //getDetailRecipe(recipe_id)
 
         getSupportActionBarRecipes()
     }
@@ -87,7 +88,7 @@ class DetailsRecipe : AppCompatActivity() {
 
         when (item.itemId) {
             R.id.actionFavorite -> {
-                var id = recipeItemResponse.id
+                val id = intent.getStringExtra(EXTRA_RECIPE_ID).orEmpty()
 
                 if (!session.isFavorite(id)) {
                     session.saveRecipe(id, SessionManager.ACTIVE)
@@ -101,7 +102,7 @@ class DetailsRecipe : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    private fun getDetailRecipe (id: String) {
+    /*private fun getDetailRecipe (id: String) {
         CoroutineScope(Dispatchers.IO).launch {
             val response = recipeService.findRecipeById(id)
 
@@ -116,27 +117,16 @@ class DetailsRecipe : AppCompatActivity() {
                 }
             }
         }
-    }
+    }*/
 
-    private fun createDetails (recipeItemResponse: RecipeItemResponse) {
-        Picasso.get().load(recipeItemResponse.image).into(binding.imgDetailRecipeItem)
-         for (ingredient in recipeItemResponse.ingredients) {
+    private fun createDetails (recipes:List<Recipe>) {
+        Picasso.get().load(recipes[0].img).into(binding.imgDetailRecipeItem)
+         for (ingredient in recipes[0].ingredients.split(",")) {
             binding.txtIngredients.text = "${binding.txtIngredients.text}\n\n${ingredient}"
         }
 
-        for (instruction in recipeItemResponse.instructions) {
-            binding.txtInstructions.text = "${binding.txtInstructions.text}\n\n${instruction}"
-        }
-    }
-
-    private fun createDetailsRecipeDAO (recipe: Recipe) {
-        Picasso.get().load("https://cdn.dummyjson.com/recipe-images/1.webp").into(binding.imgDetailRecipeItem)
-        for (ingredient in recipe.ingredients) {
-            binding.txtIngredients.text = "${binding.txtIngredients.text} + ${ingredient}"
-        }
-
-        for (instruction in recipe.instructions) {
-            binding.txtInstructions.text = "${binding.txtInstructions.text} + ${instruction}"
+        for (instruction in recipes[0].instructions.split(",")) {
+            binding.txtInstructions.text = "${ binding.txtInstructions.text}\n\n${instruction}"
         }
     }
 
