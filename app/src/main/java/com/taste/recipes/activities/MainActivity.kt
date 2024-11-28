@@ -92,7 +92,6 @@ class MainActivity : AppCompatActivity() {
                 recipeTags.add(item);
             }
         }
-       // recipeTagAdapter.filterCountry(recipeTags)
 
         if (recipeTags.isEmpty()) {
             rvTags.visibility = View.GONE

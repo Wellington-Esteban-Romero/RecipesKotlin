@@ -110,7 +110,7 @@ class ListRecipe : AppCompatActivity() {
 
         val id = recipeItemResponse.id
 
-        if (!session.isFavorite(id)) session.saveHoroscope(id, SessionManager.DES_ACTIVE)
+        if (!session.isFavorite(id)) session.saveRecipe(id, SessionManager.DES_ACTIVE)
 
         startActivity(intent)
     }
@@ -162,7 +162,7 @@ class ListRecipe : AppCompatActivity() {
     }
 
     private fun getSupportActionBarRecipes () {
-        var supportActionBar = supportActionBar;
+        val supportActionBar = supportActionBar;
         supportActionBar?.setDisplayShowHomeEnabled(true);
         supportActionBar?.title = "Recipes $country"
         supportActionBar?.setDisplayUseLogoEnabled(true);

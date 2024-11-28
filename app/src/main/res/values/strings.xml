@@ -17,4 +17,7 @@
     <string name="create_new">Create recipe</string>
     <string name="not_found_country">Not found country</string>
     <string name="not_found_recipe">Not found recipe</string>
+    <string name="recipe_name">Recipe Name</string>
+    <string name="ingredients">Ingredients</string>
+    <string name="instructions">Instructions</string>
 </resources>

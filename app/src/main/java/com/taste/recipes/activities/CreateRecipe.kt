@@ -35,10 +35,10 @@ class CreateRecipe : AppCompatActivity() {
 
         getSupportActionBarRecipes()
 
-        btnAddIngredient = findViewById(R.id.btnAddIngredient)
-        txtAddIngredient = findViewById(R.id.txtAddIngredient)
+        //btnAddIngredient = findViewById(R.id.btnAddIngredient)
+        //txtAddIngredient = findViewById(R.id.txtAddIngredient)
 
-        btnAddIngredient.setOnClickListener {
+       /* btnAddIngredient.setOnClickListener {
 
             val view:View = LayoutInflater.from(this).inflate(R.layout.dialog_recipe, null)
 
@@ -53,7 +53,7 @@ class CreateRecipe : AppCompatActivity() {
                 }
                 .setNegativeButton(android.R.string.cancel, null)
                 .show()
-        }
+        }*/
     }
 
     private fun getSupportActionBarRecipes () {

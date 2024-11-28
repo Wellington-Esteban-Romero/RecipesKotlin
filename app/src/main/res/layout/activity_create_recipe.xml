@@ -7,15 +7,20 @@
     android:layout_height="match_parent"
     tools:context=".activities.CreateRecipe"
     android:orientation="vertical"
-    android:layout_marginStart="26dp"
-    android:layout_marginEnd="26dp">
+    android:background="@color/white">
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textField"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:hint="Name recipe">
+        android:hint="@string/recipe_name"
+        app:boxCornerRadiusTopStart="22dp"
+        app:boxCornerRadiusTopEnd="22dp"
+        app:boxCornerRadiusBottomStart="22dp"
+        app:boxCornerRadiusBottomEnd="22dp"
+        android:layout_marginStart="26dp"
+        android:layout_marginEnd="26dp">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
@@ -24,44 +29,58 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <Button
-            android:id="@+id/btnAddIngredient"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:text="más">
-
-        </Button>
-
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1">
-
-            <TextView
-                android:id="@+id/txtAddIngredient"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-
-            </TextView>
-
-        </ScrollView>
-
-    </LinearLayout>
-
-    <Button
-        android:id="@+id/btnAddRecipe"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textFieldIngredient"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:text="Add">
+        android:layout_marginTop="28dp"
+        android:hint="@string/ingredients"
+        app:boxCornerRadiusTopStart="22dp"
+        app:boxCornerRadiusTopEnd="22dp"
+        app:boxCornerRadiusBottomStart="22dp"
+        app:boxCornerRadiusBottomEnd="22dp"
+        android:layout_marginStart="26dp"
+        android:layout_marginEnd="26dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textFieldInstructions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:hint="@string/instructions"
+        app:boxCornerRadiusTopStart="22dp"
+        app:boxCornerRadiusTopEnd="22dp"
+        app:boxCornerRadiusBottomStart="22dp"
+        app:boxCornerRadiusBottomEnd="22dp"
+        android:layout_marginStart="26dp"
+        android:layout_marginEnd="26dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:id="@+id/submit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Submit"
+        android:textSize="26dp"
+        android:height="64dp"
+        android:backgroundTint="@color/menu_color"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="120dp"
+        android:layout_marginEnd="120dp">
 
     </Button>
-
 
 </LinearLayout>
