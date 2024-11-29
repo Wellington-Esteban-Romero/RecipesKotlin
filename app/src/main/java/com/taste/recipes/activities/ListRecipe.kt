@@ -70,7 +70,6 @@ class ListRecipe : AppCompatActivity() {
         msg_empty = findViewById(R.id.msg_empty_recipe)
 
         val id = intent.getStringExtra(EXTRA_RECIPE_TAG_ID).orEmpty()
-        println(id +" - " + Utils.getTag(id.toInt()))
 
         country = Utils.getTag(id.toInt())
 

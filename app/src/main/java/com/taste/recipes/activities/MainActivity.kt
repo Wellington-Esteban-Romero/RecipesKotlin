@@ -43,6 +43,7 @@ class MainActivity : AppCompatActivity() {
 
     companion object {
         lateinit var session: SessionManager
+        const val LOADED: Int = 1
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -61,9 +62,8 @@ class MainActivity : AppCompatActivity() {
 
         recipeService = RetrofitProvider.getRetrofit()
 
-        //recipeDAO= RecipeDAO(this)
-        //recipeDAO.deleteAll()
-       //getAllRecipes()
+        /*recipeDAO= RecipeDAO(this)
+        recipeDAO.deleteAll()*/
 
         rvTags = findViewById(R.id.rvTags)
 
@@ -72,6 +72,10 @@ class MainActivity : AppCompatActivity() {
         msg_empty = findViewById(R.id.msg_empty)
 
         session = SessionManager(applicationContext)
+
+        if (session.getRecipes("load").isEmpty()) {
+            getAllRecipes()
+        }
 
         recipeTagAdapter = RecipeTagAdapter(recipeTags) { tag ->
             onItemSelect(tag)
@@ -142,7 +146,7 @@ class MainActivity : AppCompatActivity() {
 
                     runOnUiThread {
                         loadRecipes(responseBody)
-                        //session.saveRecipes("load","1")
+                        session.saveRecipes("load", LOADED.toString())
                     }
                 }
             }
@@ -165,8 +169,7 @@ class MainActivity : AppCompatActivity() {
     private fun getSupportActionBarRecipes () {
         var supportActionBar = supportActionBar;
         supportActionBar?.setDisplayShowHomeEnabled(true);
-        supportActionBar?.title = "Recipes for country"
-        //supportActionBar?.setLogo(R.drawable.ic_zodiac);
+        supportActionBar?.title = "Recipes by country"
         supportActionBar?.setDisplayUseLogoEnabled(true);
 
         val colorDrawable = ColorDrawable(getResources().getColor(R.color.menu_color, null))

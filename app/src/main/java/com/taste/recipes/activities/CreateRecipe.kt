@@ -3,6 +3,7 @@ package com.taste.recipes.activities
 import android.content.Intent
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
@@ -27,6 +28,7 @@ class CreateRecipe : AppCompatActivity() {
             val flag = Intent.FLAG_GRANT_READ_URI_PERMISSION
             this.contentResolver.takePersistableUriPermission(uri, flag)
             recipe.img = uri.toString()
+            Toast.makeText(this, "Se ha cargado la imagen correctamente", Toast.LENGTH_SHORT).show()
             // Mostrar la imagen en un ImageView (opcional)
             //binding.imageViewSelected.setImageURI(uri)
         }

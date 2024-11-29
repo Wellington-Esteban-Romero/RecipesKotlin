@@ -29,12 +29,12 @@
     <string name="how_to_make">How to make?</string>
     <string name="submit">Submit</string>
     <string name="save_receta">Save Recipe</string>
-    <string name="t_tulo">Título</string>
-    <string name="dificultad_f_cil_media_dif_cil">Dificultad (Fácil, Media, Difícil)</string>
-    <string name="tiempo_de_cocci_n_minutos">Tiempo de cocción (minutos)</string>
-    <string name="tiempo_de_preparaci_n_minutos">Tiempo de preparación (minutos)</string>
-    <string name="instrucciones">Instrucciones</string>
+    <string name="title">Title</string>
+    <string name="dificultad">Difficulty (Easy, Medium, Hard)</string>
+    <string name="tiempo_cooking">Cooking time (minutes)</string>
+    <string name="preparation_time">Preparation time (minutes)</string>
+    <string name="instrucciones">Instructions</string>
     <string name="ingredientes">Ingredientes</string>
-    <string name="porciones">Porciones</string>
-    <string name="seleccionar_imagen">Seleccionar Imagen</string>
+    <string name="porciones">severa</string>
+    <string name="select_mage">Select Image</string>
 </resources>

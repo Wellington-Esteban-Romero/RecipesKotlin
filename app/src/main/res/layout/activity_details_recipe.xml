@@ -25,14 +25,23 @@
             >
         </ImageView>
 
+        <TextView
+            android:id="@+id/nameRecipe"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textSize="18dp"
+            android:layout_marginStart="6dp">
+
+        </TextView>
+
         <ImageView
             android:id="@+id/imgEdit"
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:src="@drawable/edit_bg"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="20dp"
-            android:layout_gravity="bottom|end"
+            android:layout_marginEnd="2dp"
+            android:layout_gravity="bottom|right"
             android:padding="16dp"
             android:visibility="visible"
             android:background="@drawable/circle_bg"
@@ -71,6 +80,7 @@
                 android:id="@+id/txtIngredients"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:layout_marginStart="30dp"
                 android:layout_marginEnd="30dp"
                 android:textSize="16sp"
@@ -94,7 +104,7 @@
                 android:id="@+id/txtInstructions"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="0dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginStart="30dp"
                 android:layout_marginEnd="30dp"
                 android:textSize="16sp"

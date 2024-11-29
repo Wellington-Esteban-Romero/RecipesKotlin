@@ -49,10 +49,21 @@ class DetailsRecipe : AppCompatActivity() {
         initListener()
     }
 
+    override fun onResume() {
+        super.onResume()
+
+        val recipe_id = intent.getStringExtra(EXTRA_RECIPE_ID).orEmpty()
+
+        recipes = recipeDAO.findRecipeById(recipe_id)
+
+        createDetails(recipes)
+
+        getSupportActionBarRecipes()
+    }
+
     private fun init () {
 
         val recipe_id = intent.getStringExtra(EXTRA_RECIPE_ID).orEmpty()
-        println("recipe -> ${recipe_id}")
 
         imgEdit = findViewById(R.id.imgEdit)
 
@@ -75,7 +86,6 @@ class DetailsRecipe : AppCompatActivity() {
 
         imgEdit.setOnClickListener {
             val intent = Intent(this, CreateRecipe::class.java)
-            intent.putExtra(CreateRecipe.EXTRA_IS_DETAILS, "true")
             intent.putExtra(CreateRecipe.EXTRA_IS_DETAILS, "true")
             intent.putExtra(EXTRA_RECIPE_ID, id)
             startActivity(intent)
@@ -120,13 +130,10 @@ class DetailsRecipe : AppCompatActivity() {
 
     private fun createDetails (recipes:List<Recipe>) {
         Picasso.get().load(recipes[0].img).into(binding.imgDetailRecipeItem)
-         for (ingredient in recipes[0].ingredients.split(",")) {
-            binding.txtIngredients.text = "${binding.txtIngredients.text}\n\n${ingredient}"
-        }
+        binding.txtIngredients.text = recipes[0].ingredients.split(", ").joinToString("\n\n")
 
-        for (instruction in recipes[0].instructions.split(",")) {
-            binding.txtInstructions.text = "${ binding.txtInstructions.text}\n\n${instruction}"
-        }
+        binding.txtInstructions.text = recipes[0].instructions.split(", ").joinToString("\n\n")
+
     }
 
     private fun deleteRecipe(recipe: Recipe) {

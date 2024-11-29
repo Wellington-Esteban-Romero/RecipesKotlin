@@ -26,7 +26,7 @@
             android:id="@+id/textFieldTitleName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/t_tulo"
+            android:hint="@string/title"
             app:helperText="Maximino 50 characters">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -71,7 +71,7 @@
             android:id="@+id/textFieldPrepTime"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/tiempo_de_preparaci_n_minutos">
+            android:hint="@string/preparation_time">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/editTextPrepTime"
@@ -85,7 +85,7 @@
             android:id="@+id/textFieldCookTime"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/tiempo_de_cocci_n_minutos">
+            android:hint="@string/tiempo_cooking">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/editTextCookTime"
@@ -113,7 +113,7 @@
             android:id="@+id/textFieldDifficulty"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/dificultad_f_cil_media_dif_cil">
+            android:hint="@string/dificultad">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/editTextDifficulty"
@@ -127,7 +127,7 @@
             android:id="@+id/btnSelectImage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/seleccionar_imagen"
+            android:text="@string/select_mage"
             android:layout_gravity="center" />
 
         <!-- Botón para guardar -->
