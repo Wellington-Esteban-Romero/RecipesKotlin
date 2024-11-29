@@ -1,86 +1,135 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.CreateRecipe"
-    android:orientation="vertical"
-    android:background="@color/white">
+    android:padding="16dp"
+    tools:context=".activities.CreateRecipe">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textFieldTitleName"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:hint="@string/recipe_name"
-        app:boxCornerRadiusTopStart="22dp"
-        app:boxCornerRadiusTopEnd="22dp"
-        app:boxCornerRadiusBottomStart="22dp"
-        app:boxCornerRadiusBottomEnd="22dp"
-        android:layout_marginStart="26dp"
-        android:layout_marginEnd="26dp">
+        android:orientation="vertical"
+        android:spacing="16dp">
 
-        <com.google.android.material.textfield.TextInputEditText
+        <!-- Campo para el título -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textFieldTitleName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            />
+            android:hint="@string/t_tulo"
+            app:helperText="Maximino 50 characters">
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editTextTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textFieldIngredient"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
-        android:hint="@string/ingredients"
-        app:boxCornerRadiusTopStart="22dp"
-        app:boxCornerRadiusTopEnd="22dp"
-        app:boxCornerRadiusBottomStart="22dp"
-        app:boxCornerRadiusBottomEnd="22dp"
-        android:layout_marginStart="26dp"
-        android:layout_marginEnd="26dp">
-
-        <com.google.android.material.textfield.TextInputEditText
+        <!-- Campo para los ingredientes -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textFieldIngredients"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            />
+            android:hint="@string/ingredientes">
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editTextIngredients"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textMultiLine"
+                android:minLines="3" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textFieldInstructions"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
-        android:hint="@string/instructions"
-        app:boxCornerRadiusTopStart="22dp"
-        app:boxCornerRadiusTopEnd="22dp"
-        app:boxCornerRadiusBottomStart="22dp"
-        app:boxCornerRadiusBottomEnd="22dp"
-        android:layout_marginStart="26dp"
-        android:layout_marginEnd="26dp">
-
-        <com.google.android.material.textfield.TextInputEditText
+        <!-- Campo para las instrucciones -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textFieldInstructions"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            />
+            android:hint="@string/instrucciones">
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editTextInstructions"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textMultiLine"
+                android:minLines="5" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-    <Button
-        android:id="@+id/saveRecipe"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Submit"
-        android:textSize="26sp"
-        android:height="64dp"
-        android:backgroundTint="@color/menu_color"
-        android:layout_marginTop="20dp"
-        android:layout_marginStart="120dp"
-        android:layout_marginEnd="120dp">
+        <!-- Campo para el tiempo de preparación -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textFieldPrepTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/tiempo_de_preparaci_n_minutos">
 
-    </Button>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editTextPrepTime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-</LinearLayout>
+        <!-- Campo para el tiempo de cocción -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textFieldCookTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/tiempo_de_cocci_n_minutos">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editTextCookTime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Campo para las porciones -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textFieldServings"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/porciones">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editTextServings"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Campo para Dificultad -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textFieldDifficulty"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/dificultad_f_cil_media_dif_cil">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editTextDifficulty"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Botón para seleccionar una imagen -->
+        <Button
+            android:id="@+id/btnSelectImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/seleccionar_imagen"
+            android:layout_gravity="center" />
+
+        <!-- Botón para guardar -->
+        <Button
+            android:id="@+id/btnSaveRecipe"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/save_receta"
+            android:backgroundTint="@color/menu_color"
+            android:textColor="@android:color/white"
+            android:layout_marginTop="16dp" />
+
+    </LinearLayout>
+</ScrollView>

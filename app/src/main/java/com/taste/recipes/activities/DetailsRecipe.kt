@@ -1,36 +1,29 @@
 package com.taste.recipes.activities
 
-import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.squareup.picasso.Picasso
 import com.taste.recipes.R
-import com.taste.recipes.adapters.RecipeAdapter
-import com.taste.recipes.data.RecipeItemResponse
 import com.taste.recipes.data.entities.Recipe
 import com.taste.recipes.data.providers.RecipeDAO
 import com.taste.recipes.databinding.ActivityDetailsRecipeBinding
 import com.taste.recipes.data.providers.RetrofitProvider
 import com.taste.recipes.services.RecipeService
 import com.taste.recipes.utils.SessionManager
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 class DetailsRecipe : AppCompatActivity() {
 
     private lateinit var binding: ActivityDetailsRecipeBinding
     private lateinit var recipeService: RecipeService
-    private lateinit var recipeItemResponse: RecipeItemResponse
     private lateinit var recipeDAO: RecipeDAO
-    private lateinit var recipeAdapter: RecipeAdapter
+    private lateinit var recipes:List<Recipe>
 
     companion object {
         const val EXTRA_RECIPE_ID = "RECIPE_ID"
@@ -62,11 +55,9 @@ class DetailsRecipe : AppCompatActivity() {
 
         recipeDAO = RecipeDAO(this)
 
-        val recipes:List<Recipe> = recipeDAO.findRecipeById(recipe_id)
+        recipes = recipeDAO.findRecipeById(recipe_id)
 
         createDetails(recipes)
-
-        //getDetailRecipe(recipe_id)
 
         getSupportActionBarRecipes()
     }
@@ -86,9 +77,10 @@ class DetailsRecipe : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         println(item.icon)
 
+        val id = intent.getStringExtra(EXTRA_RECIPE_ID).orEmpty()
+
         when (item.itemId) {
             R.id.actionFavorite -> {
-                val id = intent.getStringExtra(EXTRA_RECIPE_ID).orEmpty()
 
                 if (!session.isFavorite(id)) {
                     session.saveRecipe(id, SessionManager.ACTIVE)
@@ -98,26 +90,12 @@ class DetailsRecipe : AppCompatActivity() {
                     item.setIcon(R.drawable.ic_favorite_empty)
                 }
             }
+            R.id.actionDelete -> {
+                deleteRecipe(recipes[0])
+            }
         }
         return super.onOptionsItemSelected(item)
     }
-
-    /*private fun getDetailRecipe (id: String) {
-        CoroutineScope(Dispatchers.IO).launch {
-            val response = recipeService.findRecipeById(id)
-
-            if (response.isSuccessful) {
-                val responseBody = response.body()
-                if (responseBody != null) {
-                    Log.i("Recipe", responseBody.toString())
-                    recipeItemResponse = responseBody
-                    runOnUiThread {
-                        createDetails(responseBody)
-                    }
-                }
-            }
-        }
-    }*/
 
     private fun createDetails (recipes:List<Recipe>) {
         Picasso.get().load(recipes[0].img).into(binding.imgDetailRecipeItem)
@@ -128,6 +106,19 @@ class DetailsRecipe : AppCompatActivity() {
         for (instruction in recipes[0].instructions.split(",")) {
             binding.txtInstructions.text = "${ binding.txtInstructions.text}\n\n${instruction}"
         }
+    }
+
+    private fun deleteRecipe(recipe: Recipe) {
+        MaterialAlertDialogBuilder(this)
+            .setTitle("Delete Recipe")
+            .setMessage("Are you sure delete the recipe?")
+            .setPositiveButton(android.R.string.ok) { dialog, which ->
+                // Borramos la receta en caso de pulsar el boton OK
+                recipeDAO.deleteRecipe(intent.getStringExtra(EXTRA_RECIPE_ID).orEmpty())
+            }
+            .setNegativeButton(android.R.string.cancel, null)
+            .setIcon(R.drawable.ic_delete)
+            .show()
     }
 
     private fun getSupportActionBarRecipes () {

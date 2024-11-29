@@ -16,6 +16,7 @@
         android:layout_marginTop="0dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
+        android:contentDescription="@string/todo"
         android:scaleType="centerCrop"
         >
     </ImageView>
@@ -34,7 +35,7 @@
                 android:id="@+id/txtTitleIngredient"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Ingredient"
+                android:text="@string/ingredient"
                 android:textSize="24sp"
                 android:textStyle="bold"
                 android:layout_marginTop="16dp"
@@ -58,7 +59,7 @@
                 android:id="@+id/txtTitleInstructions"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="How to make?"
+                android:text="@string/how_to_make"
                 android:textSize="24sp"
                 android:textStyle="bold"
                 android:layout_marginTop="16dp"
@@ -66,7 +67,6 @@
                 android:layout_marginEnd="30dp"
                 android:textAllCaps="true"
                 >
-
             </TextView>
 
             <TextView

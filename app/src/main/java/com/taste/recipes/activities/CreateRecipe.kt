@@ -44,7 +44,7 @@ class CreateRecipe : AppCompatActivity() {
 
         recipeDAO = RecipeDAO(this)
 
-        binding.saveRecipe.setOnClickListener {
+        binding.btnSaveRecipe.setOnClickListener {
             saveRecipe()
         }
 
@@ -54,26 +54,87 @@ class CreateRecipe : AppCompatActivity() {
     }
 
     private fun validateTask(): Boolean {
-        // Comprobamos el texto introducido para mostrar posibles errores
+        var isValid = true
+
         if (recipe.title.trim().isEmpty()) {
             binding.textFieldTitleName.error = "Escribe algo"
-            return false
+            isValid = false
         } else {
             binding.textFieldTitleName.error = null
         }
         if (recipe.title.length > 50) {
-            binding.textFieldTitleName.error = "El titulo de ser mayor de 50 caracteres"
-            return false
+            binding.textFieldTitleName.error = "Te pasaste"
+            isValid = false
         } else {
             binding.textFieldTitleName.error = null
         }
-        return true
+
+        // Validación de los ingredientes
+        if (recipe.ingredients.trim().isEmpty()) {
+            binding.textFieldIngredients.error = "Escribe los ingredientes"
+            isValid = false
+        } else {
+            binding.textFieldIngredients.error = null
+        }
+
+        // Validación de las instrucciones
+        if (recipe.instructions.trim().isEmpty()) {
+            binding.textFieldInstructions.error = "Escribe las instrucciones"
+            isValid = false
+        } else {
+            binding.textFieldInstructions.error = null
+        }
+
+        // Validación del tiempo de preparación
+        if (recipe.prepTimeMinutes <= 0) {
+            binding.textFieldPrepTime.error = "El tiempo de preparación debe ser mayor a 0"
+            isValid = false
+        } else {
+            binding.textFieldPrepTime.error = null
+        }
+
+        // Validación del tiempo de cocción
+        if (recipe.cookTimeMinutes <= 0) {
+            binding.textFieldCookTime.error = "El tiempo de cocción debe ser mayor a 0"
+            isValid = false
+        } else {
+            binding.textFieldCookTime.error = null
+        }
+
+        // Validación de las porciones
+        if (recipe.servings.toInt() <= 0) {
+            binding.textFieldServings.error = "Las porciones deben ser mayores a 0"
+            isValid = false
+        } else {
+            binding.textFieldServings.error = null
+        }
+
+        // Validar Dificultad
+        if (recipe.difficulty.trim().isEmpty()) {
+            binding.textFieldDifficulty.error = "Selecciona una dificultad"
+            isValid = false
+        } else {
+            binding.textFieldDifficulty.error = null
+        }
+
+        // Validación de la imagen
+        if (recipe.img.trim().isEmpty()) {
+            binding.btnSelectImage.error = "Proporciona una imagen válida"
+            isValid = false
+        } else {
+            binding.btnSelectImage.error = null
+        }
+        return isValid
     }
 
     private fun saveRecipe() {
         recipe.title = binding.textFieldTitleName.editText?.text.toString()
-        recipe.ingredients = binding.textFieldIngredient.editText?.text.toString()
+        recipe.ingredients = binding.textFieldIngredients.editText?.text.toString()
         recipe.instructions = binding.textFieldInstructions.editText?.text.toString()
+        recipe.prepTimeMinutes = binding.textFieldPrepTime.editText?.text.toString().toInt()
+        recipe.cookTimeMinutes = binding.textFieldCookTime.editText?.text.toString().toInt()
+        recipe.servings = binding.textFieldServings.editText?.text.toString()
+        recipe.difficulty = binding.textFieldDifficulty.editText?.text.toString()
         recipe.category = intent.getStringExtra(EXTRA_RECIPE_CREATE_TAG_ID).orEmpty()
 
         if (validateTask()) {

@@ -96,52 +96,6 @@ class ListRecipe : AppCompatActivity() {
         recipeAdapter.notifyDataSetChanged()
     }
 
-    /*private fun getRecipesByCountry (country: String) {
-        CoroutineScope(Dispatchers.IO).launch {
-            val response = recipeService.findRecipeByCountry(country)
-
-            if (response.isSuccessful) {
-                val responseBody = response.body()
-                if (responseBody != null) {
-                    Log.i("Recipes Names", responseBody.toString())
-
-                    runOnUiThread {
-                        recipeItems = responseBody.recipes
-                        recipeAdapter.updateRecipes(recipeItems)
-                    }
-                }
-            }
-        }
-    }*/
-
-   /* private fun getRecipesByCountry2 (country: String) {
-        CoroutineScope(Dispatchers.IO).launch {
-            val response = recipeService.findRecipeByCountry(country)
-
-            if (response.isSuccessful) {
-                val responseBody = response.body()
-                if (responseBody != null) {
-                    Log.i("Recipes Names", responseBody.toString())
-
-                    runOnUiThread {
-                        recipeItems = responseBody.recipes
-
-                        recipeList = recipeDAO.findAllByCategory(intent.getStringExtra(EXTRA_RECIPE_TAG_ID).orEmpty()).toMutableList()
-
-                        recipeList.filter { recipe ->
-                            recipeItems.add(RecipeItemResponse(recipe.id.toString(), recipe.title, recipe.ingredients.split(","),
-                                recipe.instructions.split(","), 0, 0, "",
-                                "", "", 0, "")
-                            )
-                        }
-
-                        recipeAdapter.updateRecipes(recipeItems)
-                    }
-                }
-            }
-        }
-    }*/
-
     private fun onItemSelect(recipe: Recipe) {
         val intent = Intent(this, DetailsRecipe::class.java)
         intent.putExtra(DetailsRecipe.EXTRA_RECIPE_ID, recipe.id.toString())
@@ -174,7 +128,6 @@ class ListRecipe : AppCompatActivity() {
 
         when (item.itemId) {
             R.id.create_new_recipe -> {
-                // Crear tarea
                 val intent = Intent(this, CreateRecipe::class.java)
                 intent.putExtra(
                     CreateRecipe.EXTRA_RECIPE_CREATE_TAG_ID,

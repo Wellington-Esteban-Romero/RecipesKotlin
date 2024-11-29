@@ -65,12 +65,49 @@ class RecipeDAO (val context: Context) {
         }
     }
 
+    fun update(recipe: Recipe) {
+        open()
+
+        // Create a new map of values, where column names are the keys
+        val values = getContentValues(recipe)
+
+        try {
+            // Update the existing rows, returning the number of affected rows
+            val updatedRows = db.update(
+                Recipe.TABLE_NAME, values,
+                "${Recipe.COLUMN_ID} = ${recipe.id}",
+                null
+            )
+        } catch (e: Exception) {
+            Log.e("DB", e.stackTraceToString())
+        } finally {
+            close()
+        }
+    }
+
     fun deleteAll() {
         open()
 
         try {
             // Insert the new row, returning the primary key value of the new row
             val id = db.delete(Recipe.TABLE_NAME, null, null)
+        } catch (e: Exception) {
+            Log.e("DB", e.stackTraceToString())
+        } finally {
+            close()
+        }
+    }
+
+    fun deleteRecipe(idRecipe:String) {
+        open()
+
+        try {
+            // Insert the new row, returning the primary key value of the new row
+            val id = db.delete(
+                Recipe.TABLE_NAME,
+                "${Recipe.COLUMN_ID} = ?",
+                arrayOf(idRecipe)
+            )
         } catch (e: Exception) {
             Log.e("DB", e.stackTraceToString())
         } finally {
