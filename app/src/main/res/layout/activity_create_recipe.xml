@@ -13,6 +13,14 @@
         android:layout_marginTop="80dp"
         android:spacing="16dp">
 
+        <ImageView
+            android:id="@+id/imageViewSelected"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone">
+
+        </ImageView>
+
         <!-- Campo para el título -->
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textFieldTitleName"

@@ -1,9 +1,11 @@
 package com.taste.recipes.activities
 
+import android.content.Intent
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.ImageView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -24,6 +26,7 @@ class DetailsRecipe : AppCompatActivity() {
     private lateinit var recipeService: RecipeService
     private lateinit var recipeDAO: RecipeDAO
     private lateinit var recipes:List<Recipe>
+    private lateinit var imgEdit:ImageView
 
     companion object {
         const val EXTRA_RECIPE_ID = "RECIPE_ID"
@@ -43,11 +46,15 @@ class DetailsRecipe : AppCompatActivity() {
             insets
         }
         init()
+        initListener()
     }
 
     private fun init () {
+
         val recipe_id = intent.getStringExtra(EXTRA_RECIPE_ID).orEmpty()
         println("recipe -> ${recipe_id}")
+
+        imgEdit = findViewById(R.id.imgEdit)
 
         recipeService = RetrofitProvider.getRetrofit()
 
@@ -60,6 +67,20 @@ class DetailsRecipe : AppCompatActivity() {
         createDetails(recipes)
 
         getSupportActionBarRecipes()
+    }
+
+    private fun initListener () {
+
+        val id = intent.getStringExtra(EXTRA_RECIPE_ID).orEmpty()
+
+        imgEdit.setOnClickListener {
+            val intent = Intent(this, CreateRecipe::class.java)
+            intent.putExtra(CreateRecipe.EXTRA_IS_DETAILS, "true")
+            intent.putExtra(CreateRecipe.EXTRA_IS_DETAILS, "true")
+            intent.putExtra(EXTRA_RECIPE_ID, id)
+            startActivity(intent)
+        }
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -115,6 +136,7 @@ class DetailsRecipe : AppCompatActivity() {
             .setPositiveButton(android.R.string.ok) { dialog, which ->
                 // Borramos la receta en caso de pulsar el boton OK
                 recipeDAO.deleteRecipe(intent.getStringExtra(EXTRA_RECIPE_ID).orEmpty())
+                finish()
             }
             .setNegativeButton(android.R.string.cancel, null)
             .setIcon(R.drawable.ic_delete)
@@ -128,7 +150,5 @@ class DetailsRecipe : AppCompatActivity() {
         supportActionBar?.setDisplayUseLogoEnabled(true)
         val colorDrawable = ColorDrawable(getResources().getColor(R.color.menu_color, null))
         supportActionBar!!.setBackgroundDrawable(colorDrawable)
-        //supportActionBar!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-
     }
 }

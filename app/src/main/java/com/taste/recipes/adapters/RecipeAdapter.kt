@@ -1,5 +1,6 @@
 package com.taste.recipes.adapters
 
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -43,10 +44,10 @@ class RecipeViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
         itemRecipeBinding.nameItem.text = recipe.title
 
-        if (recipe.img.isNotEmpty())
+        if (recipe.img.startsWith("https://"))
             Picasso.get().load(recipe.img).into(itemRecipeBinding.imgRecipeItem)
         else
-            Picasso.get().load("https://cdn.dummyjson.com/recipe-images/1.webp").into(itemRecipeBinding.imgRecipeItem)
+            itemRecipeBinding.imgRecipeItem.setImageURI(Uri.parse(recipe.img))
 
         itemView.setOnClickListener {
             onClickListener(recipe)

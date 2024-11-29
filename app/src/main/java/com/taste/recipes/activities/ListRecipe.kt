@@ -84,15 +84,17 @@ class ListRecipe : AppCompatActivity() {
             hasFixedSize()
         }
 
-        val recipes:List<Recipe> = recipeDAO.findAllByCategory(id)
-        recipeItems = recipes
-        recipeAdapter.updateRecipes(recipeItems)
 
         getSupportActionBarRecipes()
     }
 
     override fun onResume() {
         super.onResume()
+
+        val id = intent.getStringExtra(EXTRA_RECIPE_TAG_ID).orEmpty()
+        val recipes:List<Recipe> = recipeDAO.findAllByCategory(id)
+        recipeItems = recipes
+        recipeAdapter.updateRecipes(recipeItems)
         recipeAdapter.notifyDataSetChanged()
     }
 
@@ -129,6 +131,7 @@ class ListRecipe : AppCompatActivity() {
         when (item.itemId) {
             R.id.create_new_recipe -> {
                 val intent = Intent(this, CreateRecipe::class.java)
+                intent.putExtra(CreateRecipe.EXTRA_IS_DETAILS, "false")
                 intent.putExtra(
                     CreateRecipe.EXTRA_RECIPE_CREATE_TAG_ID,
                     this.intent.getStringExtra(EXTRA_RECIPE_TAG_ID).orEmpty()
