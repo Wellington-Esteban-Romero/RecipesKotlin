@@ -13,17 +13,17 @@ import com.taste.recipes.databinding.ItemRecipeBinding
 import com.taste.recipes.utils.SessionManager
 
 class RecipeAdapter (private var recipes: List<Recipe> = emptyList(),
-                     private val onClickListener: (Recipe) -> Unit): RecyclerView.Adapter<SuperheroViewHolder>() {
+                     private val onClickListener: (Recipe) -> Unit): RecyclerView.Adapter<RecipeViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SuperheroViewHolder {
-        return SuperheroViewHolder(
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecipeViewHolder {
+        return RecipeViewHolder(
             LayoutInflater.from(parent.context).inflate(R.layout.item_recipe, parent, false)
         )
     }
 
     override fun getItemCount() = recipes.size
 
-    override fun onBindViewHolder(holder: SuperheroViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: RecipeViewHolder, position: Int) {
         holder.bind(recipes[position], onClickListener)
     }
 
@@ -33,7 +33,7 @@ class RecipeAdapter (private var recipes: List<Recipe> = emptyList(),
     }
 }
 
-class SuperheroViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+class RecipeViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
     private val itemRecipeBinding = ItemRecipeBinding.bind(view)
     private val favoriteImageView = view.findViewById<ImageView>(R.id.imgFavorite)

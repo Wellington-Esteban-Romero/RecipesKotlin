@@ -1,8 +1,10 @@
 package com.taste.recipes.activities
 
+import android.content.Intent
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -18,6 +20,17 @@ class CreateRecipe : AppCompatActivity() {
     private lateinit var recipeDAO: RecipeDAO
     private lateinit var recipe: Recipe
 
+    // Registrar el launcher para seleccionar imágenes
+    private val pickImageLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
+        uri?.let {
+            // Guardar la URI de la imagen seleccionada
+            recipe.img = uri.toString()
+
+            // Mostrar la imagen en un ImageView (opcional)
+            //binding.imageViewSelected.setImageURI(uri)
+        }
+    }
+
     companion object {
         const val EXTRA_RECIPE_CREATE_TAG_ID = "RECIPE_CREATE_TAG_ID"
     }
@@ -29,12 +42,9 @@ class CreateRecipe : AppCompatActivity() {
         binding = ActivityCreateRecipeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
+
         init()
+        iniEvent()
     }
 
     private fun init () {
@@ -44,13 +54,20 @@ class CreateRecipe : AppCompatActivity() {
 
         recipeDAO = RecipeDAO(this)
 
+        recipe = Recipe(-1,"")
+
+        getSupportActionBarRecipes()
+    }
+
+    private fun iniEvent () {
+
         binding.btnSaveRecipe.setOnClickListener {
             saveRecipe()
         }
 
-        recipe = Recipe(-1,"")
-
-        getSupportActionBarRecipes()
+        binding.btnSelectImage.setOnClickListener {
+            pickImageLauncher.launch("image/*")
+        }
     }
 
     private fun validateTask(): Boolean {
@@ -131,9 +148,21 @@ class CreateRecipe : AppCompatActivity() {
         recipe.title = binding.textFieldTitleName.editText?.text.toString()
         recipe.ingredients = binding.textFieldIngredients.editText?.text.toString()
         recipe.instructions = binding.textFieldInstructions.editText?.text.toString()
-        recipe.prepTimeMinutes = binding.textFieldPrepTime.editText?.text.toString().toInt()
-        recipe.cookTimeMinutes = binding.textFieldCookTime.editText?.text.toString().toInt()
-        recipe.servings = binding.textFieldServings.editText?.text.toString()
+        if (binding.textFieldPrepTime.editText?.text.toString().isEmpty()){
+            recipe.prepTimeMinutes = 0
+        } else {
+            recipe.prepTimeMinutes = binding.textFieldPrepTime.editText?.text.toString().toInt()
+        }
+        if (binding.textFieldCookTime.editText?.text.toString().isEmpty()){
+            recipe.cookTimeMinutes = 0
+        } else {
+            recipe.cookTimeMinutes = binding.textFieldCookTime.editText?.text.toString().toInt()
+        }
+        if (binding.textFieldServings.editText?.text.toString().isEmpty()){
+            recipe.servings = "0"
+        } else {
+            recipe.servings = binding.textFieldServings.editText?.text.toString()
+        }
         recipe.difficulty = binding.textFieldDifficulty.editText?.text.toString()
         recipe.category = intent.getStringExtra(EXTRA_RECIPE_CREATE_TAG_ID).orEmpty()
 
@@ -145,7 +174,7 @@ class CreateRecipe : AppCompatActivity() {
     }
 
     private fun getSupportActionBarRecipes () {
-        var supportActionBar = supportActionBar;
+        val supportActionBar = supportActionBar;
         supportActionBar?.setDisplayShowHomeEnabled(true);
         supportActionBar?.title = "Create Recipe"
         supportActionBar?.setDisplayUseLogoEnabled(true);
